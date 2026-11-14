@@ -288,9 +288,9 @@ html_content = f'''<!DOCTYPE html>
       position: absolute;
       top: 46.7%;
       left: 50%;
-      transform: translate(-50%, -50%) scale(0.7);
-      width: 86px;
-      height: 78px;
+      transform: translate(-50%, -50%) scale(0.8);
+      width: 110px;
+      height: 98px;
       pointer-events: none;
       z-index: 48;
       perspective: 900px;
@@ -308,9 +308,9 @@ html_content = f'''<!DOCTYPE html>
 
     .flying-butterfly-container.landed {{
       animation: none !important;
-      top: 115px !important;
+      top: 112px !important;
       left: 50% !important;
-      transform: translate(-50%, -50%) scale(0.92) !important;
+      transform: translate(-50%, -50%) scale(1.05) !important;
       opacity: 1 !important;
     }}
 
@@ -368,11 +368,11 @@ html_content = f'''<!DOCTYPE html>
       position: absolute;
       left: 50%;
       top: 50%;
-      transform: translate(-50%, 28px) scale(0.85, 0.35);
-      width: 72px;
-      height: 36px;
+      transform: translate(-50%, 34px) scale(0.85, 0.35);
+      width: 90px;
+      height: 44px;
       background: rgba(40, 20, 10, 0.28);
-      filter: blur(7px);
+      filter: blur(8px);
       border-radius: 50%;
       pointer-events: none;
       animation: shadowPulse 0.26s ease-in-out infinite alternate;
@@ -389,45 +389,45 @@ html_content = f'''<!DOCTYPE html>
     }}
 
     @keyframes shadowPulse {{
-      0% {{ transform: translate(-50%, 26px) scale(0.9, 0.36); opacity: 0.32; }}
-      100% {{ transform: translate(-50%, 32px) scale(0.72, 0.28); opacity: 0.16; }}
+      0% {{ transform: translate(-50%, 32px) scale(0.9, 0.36); opacity: 0.32; }}
+      100% {{ transform: translate(-50%, 38px) scale(0.72, 0.28); opacity: 0.16; }}
     }}
 
     @keyframes butterflyFlyUp {{
       0% {{
         top: 46.7%;
         left: 50%;
-        transform: translate(-50%, -50%) scale(0.6) rotate(0deg);
+        transform: translate(-50%, -50%) scale(0.7) rotate(0deg);
         opacity: 0;
       }}
       6% {{
         top: 46.7%;
         left: 50%;
-        transform: translate(-50%, -50%) scale(0.88) rotate(4deg);
+        transform: translate(-50%, -50%) scale(0.95) rotate(4deg);
         opacity: 1;
       }}
       28% {{
         top: 38%;
         left: 44%;
-        transform: translate(-50%, -50%) scale(1.02) rotate(-14deg);
+        transform: translate(-50%, -50%) scale(1.15) rotate(-14deg);
         opacity: 1;
       }}
       58% {{
         top: 24%;
         left: 55%;
-        transform: translate(-50%, -50%) scale(1.06) rotate(11deg);
+        transform: translate(-50%, -50%) scale(1.18) rotate(11deg);
         opacity: 1;
       }}
       84% {{
         top: 14%;
         left: 48%;
-        transform: translate(-50%, -50%) scale(0.98) rotate(-4deg);
+        transform: translate(-50%, -50%) scale(1.10) rotate(-4deg);
         opacity: 1;
       }}
       100% {{
-        top: 115px;
+        top: 112px;
         left: 50%;
-        transform: translate(-50%, -50%) scale(0.92) rotate(0deg);
+        transform: translate(-50%, -50%) scale(1.05) rotate(0deg);
         opacity: 1;
       }}
     }}
@@ -435,11 +435,11 @@ html_content = f'''<!DOCTYPE html>
     /* Scene 2 Perched Butterfly */
     .perched-butterfly-couples {{
       position: absolute;
-      top: 115px !important;
+      top: 112px !important;
       left: 50%;
-      transform: translate(-50%, -50%) scale(0.92);
-      width: 86px;
-      height: 78px;
+      transform: translate(-50%, -50%) scale(1.05);
+      width: 110px;
+      height: 98px;
       z-index: 10;
       pointer-events: none;
       display: flex;
@@ -450,7 +450,7 @@ html_content = f'''<!DOCTYPE html>
       width: 100%;
       height: 100%;
       object-fit: contain;
-      filter: drop-shadow(0 10px 14px rgba(40, 20, 10, 0.25));
+      filter: drop-shadow(0 12px 18px rgba(40, 20, 10, 0.28));
     }}
 
     /* =========================================================
