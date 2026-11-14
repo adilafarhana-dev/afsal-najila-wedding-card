@@ -1,46 +1,75 @@
 # -*- coding: utf-8 -*-
 import json
 import os
+import base64
 
-base_dir = r"C:\Users\HP\.gemini\antigravity\scratch\wedding-invitation"
-brain_dir = r"C:\Users\HP\.gemini\antigravity\brain\ef83a52c-d4e8-43ee-a994-00aba285c933"
+base_dir = os.path.dirname(os.path.abspath(__file__))
+brain_dir = r"C:\Users\HP\.gemini\antigravity\brain\6a96b10b-5c7c-47d2-9932-1bae9c1a0a9f"
 
 with open(os.path.join(base_dir, "images.json"), "r", encoding="utf-8") as f:
     images = json.load(f)
 
-envelope_b64 = images["envelope"]
-seal_b64 = images["seal"]
-couples_b64 = images["couples"]
-details_b64 = images["details"]
-couples_bg_b64 = images["couples_bg"]
-couple_left_b64 = images["couple_left"]
-couple_right_b64 = images["couple_right"]
+envelope_b64 = images.get("envelope", "")
+seal_b64 = images.get("seal", "")
+leaf_glow_b64 = images.get("leaf_glow", "")
+butterfly_full_b64 = images.get("butterfly_full", "")
+butterfly_wing_left_b64 = images.get("butterfly_wing_left", "")
+butterfly_wing_right_b64 = images.get("butterfly_wing_right", "")
+butterfly_body_b64 = images.get("butterfly_body", "")
+
+with open(os.path.join(base_dir, "spin_frame_1.jpg"), "rb") as f:
+    spin_f1_b64 = "data:image/jpeg;base64," + base64.b64encode(f.read()).decode("utf-8")
+with open(os.path.join(base_dir, "spin_frame_2.jpg"), "rb") as f:
+    spin_f2_b64 = "data:image/jpeg;base64," + base64.b64encode(f.read()).decode("utf-8")
+with open(os.path.join(base_dir, "spin_frame_3.jpg"), "rb") as f:
+    spin_f3_b64 = "data:image/jpeg;base64," + base64.b64encode(f.read()).decode("utf-8")
+with open(os.path.join(base_dir, "spin_frame_4.jpg"), "rb") as f:
+    spin_f4_b64 = "data:image/jpeg;base64," + base64.b64encode(f.read()).decode("utf-8")
+scene3_card_b64 = spin_f1_b64
+new_couple_artwork_b64 = spin_f1_b64
+
+with open(os.path.join(base_dir, "bismillah_clean.png"), "rb") as f:
+    bismillah_b64 = "data:image/png;base64," + base64.b64encode(f.read()).decode("utf-8")
+
+with open(os.path.join(base_dir, "olive_tl.png"), "rb") as f:
+    olive_tl_b64 = "data:image/png;base64," + base64.b64encode(f.read()).decode("utf-8")
+
+with open(os.path.join(base_dir, "olive_br.png"), "rb") as f:
+    olive_br_b64 = "data:image/png;base64," + base64.b64encode(f.read()).decode("utf-8")
+with open(os.path.join(base_dir, "scene4_full_card.jpg"), "rb") as f:
+    scene4_card_b64 = "data:image/jpeg;base64," + base64.b64encode(f.read()).decode("utf-8")
+
+with open(os.path.join(base_dir, "scene5_floral_bg.jpg"), "rb") as f:
+    scene5_bg_b64 = "data:image/jpeg;base64," + base64.b64encode(f.read()).decode("utf-8")
 
 html_content = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Wedding Invitation • Salmabee & Muhammed Ajnas | Rahmabee & Shahbaz Muhammed</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#FAF7F2">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Wedding Invitation — Najila Ashraf & Afsal</title>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600;700;800&family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
   <style>
     :root {{
-      --burgundy-deep: #180205;
-      --burgundy-rich: #480C17;
-      --burgundy-card: #5E1220;
+      --theme-dark: #1C231E;
+      --theme-olive: #364238;
+      --theme-olive-light: #556658;
       --gold-primary: #D4AF37;
       --gold-light: #F4E29F;
       --gold-dark: #9A7720;
       --gold-gradient: linear-gradient(135deg, #FDF0CD 0%, #D4AF37 50%, #9A7720 100%);
       --gold-glow: rgba(212, 175, 55, 0.45);
-      --parchment-bg: #FAF6EF;
+      --parchment-bg: #FAF7F2;
       --ink-dark: #2A1C1D;
-      --ink-muted: #6C5B5D;
+      --ink-muted: #556658;
     }}
 
     * {{
@@ -50,20 +79,19 @@ html_content = f'''<!DOCTYPE html>
       -webkit-tap-highlight-color: transparent;
     }}
 
-    body {{
-      font-family: 'Cormorant Garamond', serif;
-      background-color: var(--burgundy-deep);
-      background-image: 
-        radial-gradient(circle at 50% 20%, rgba(138, 26, 47, 0.45) 0%, transparent 65%),
-        radial-gradient(circle at 50% 80%, rgba(24, 2, 5, 0.98) 0%, rgba(8, 1, 2, 1) 100%);
-      color: var(--ink-dark);
+    html, body {{
+      width: 100%;
+      height: 100%;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      min-height: 100dvh;
+      margin: 0;
+      padding: 0;
       overflow-x: hidden;
-      position: relative;
+      font-family: 'Cormorant Garamond', serif;
+      background: #FAF7F2;
+      color: var(--ink-dark);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }}
 
     /* Background Particles Canvas */
@@ -77,43 +105,43 @@ html_content = f'''<!DOCTYPE html>
       z-index: 1;
     }}
 
-    /* Discreet Corner Controls */
+    /* Discreet Corner Controls (Audio Toggle) with Safe-Area Clearance */
     .corner-controls {{
-      position: fixed;
-      top: 18px;
-      right: 18px;
-      z-index: 100;
+      position: absolute;
+      top: max(10px, env(safe-area-inset-top, 10px));
+      right: max(12px, env(safe-area-inset-right, 12px));
+      z-index: 60;
       display: flex;
       align-items: center;
       gap: 8px;
     }}
 
     .icon-btn {{
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      background: rgba(30, 4, 8, 0.78);
+      background: rgba(36, 46, 38, 0.85);
       backdrop-filter: blur(8px);
-      border: 1px solid rgba(212, 175, 55, 0.4);
+      border: 1px solid rgba(212, 175, 55, 0.5);
       color: var(--gold-light);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 14px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      font-size: 13px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
       transition: all 0.3s ease;
     }}
 
     .icon-btn:hover {{
-      background: rgba(212, 175, 55, 0.25);
+      background: rgba(212, 175, 55, 0.3);
       transform: scale(1.08);
       color: #fff;
     }}
 
     .icon-btn.music-active {{
-      background: rgba(212, 175, 55, 0.35);
-      border-color: #d4af37;
+      background: rgba(46, 58, 48, 0.9);
+      border-color: #D4AF37;
       box-shadow: 0 0 16px rgba(212, 175, 55, 0.7);
       animation: pulseMusic 2.4s ease-in-out infinite;
     }}
@@ -122,46 +150,54 @@ html_content = f'''<!DOCTYPE html>
       50% {{ transform: scale(1.08); }}
     }}
 
-    /* Main Stage Container */
+    /* Main Stage Container (Full-Page Edge-to-Edge for Mobile) */
     .stage-wrapper {{
       position: relative;
       z-index: 10;
-      width: min(94vw, 440px);
-      height: min(94vh, 880px);
+      width: 100vw;
+      max-width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      max-height: 100dvh;
       perspective: 1800px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: auto;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #FAF7F2;
     }}
 
-    /* Card Base Styling */
+    /* Card Base Styling (Full Page View, Zero Letterboxing) */
     .invitation-card {{
       position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
+      height: 100dvh;
       background: var(--parchment-bg);
       background-image: 
-        radial-gradient(ellipse at center, #FFFCF7 0%, #F5EFE4 100%),
-        repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.01) 3px, rgba(0,0,0,0.01) 4px);
-      border-radius: 12px;
-      box-shadow: 
-        0 25px 60px rgba(0, 0, 0, 0.8),
-        0 0 0 1px rgba(212, 175, 55, 0.35),
-        inset 0 0 40px rgba(180, 150, 110, 0.2);
-      border: 6px solid #480C17;
-      outline: 2px solid var(--gold-primary);
-      outline-offset: -3px;
+        radial-gradient(ellipse at center, #FFFFFF 0%, #FAF7F2 100%);
+      border: none !important;
+      outline: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
       overflow-y: auto;
       overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 34px 20px 20px 20px;
+      padding-top: max(32px, calc(env(safe-area-inset-top, 0px) + 24px));
+      padding-bottom: max(20px, calc(env(safe-area-inset-bottom, 0px) + 14px));
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
       opacity: 0;
       pointer-events: none;
-      transform: translateY(14px) scale(0.98);
-      transition: opacity 1.8s cubic-bezier(0.25, 1, 0.5, 1), transform 1.8s cubic-bezier(0.25, 1, 0.5, 1);
+      transform: translateY(10px) scale(0.99);
+      transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
     }}
 
     .invitation-card.active {{
@@ -171,19 +207,254 @@ html_content = f'''<!DOCTYPE html>
     }}
 
     .invitation-card::-webkit-scrollbar {{
-      width: 4px;
+      width: 3px;
     }}
     .invitation-card::-webkit-scrollbar-track {{
-      background: rgba(0,0,0,0.03);
+      background: transparent;
     }}
     .invitation-card::-webkit-scrollbar-thumb {{
-      background: var(--gold-primary);
-      border-radius: 4px;
+      background: rgba(212, 175, 55, 0.4);
+      border-radius: 3px;
+    }}
+
+    /* Royal Corner Ornaments removed */
+    .royal-corner-decor {{ display: none !important; }}
+
+    /* Story Segmented Header Bar with Safe-Area Offset */
+    .story-header-bar {{
+      position: absolute;
+      top: max(10px, env(safe-area-inset-top, 10px));
+      left: 0;
+      width: 100%;
+      padding-left: max(16px, env(safe-area-inset-left, 16px));
+      padding-right: max(60px, calc(env(safe-area-inset-right, 16px) + 44px));
+      display: flex;
+      gap: 5px;
+      z-index: 50;
+      box-sizing: border-box;
+    }}
+    .story-dash {{
+      flex: 1;
+      height: 3.5px;
+      background: rgba(212, 175, 55, 0.25);
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }}
+    .story-dash-fill {{
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background: var(--gold-gradient);
+      box-shadow: 0 0 6px rgba(212, 175, 55, 0.8);
+      border-radius: 2px;
+    }}
+
+    /* Desktop View (Centered Elegant Presentation Frame) */
+    @media (min-width: 769px) {{
+      body {{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #18201A;
+        background-image: 
+          radial-gradient(circle at 50% 25%, #2B372E 0%, #121814 100%);
+      }}
+
+      .stage-wrapper {{
+        width: 440px;
+        height: min(94vh, 900px);
+        border-radius: 20px;
+        box-shadow: 
+          0 25px 65px rgba(0, 0, 0, 0.55),
+          0 0 0 1px rgba(212, 175, 55, 0.4);
+        margin: auto;
+      }}
+
+      .invitation-card {{
+        border-radius: 20px !important;
+        border: 2px solid rgba(212, 175, 55, 0.35) !important;
+        box-shadow: none !important;
+      }}
     }}
 
     /* =========================================================
-       SCENE 1: ROYAL ENVELOPE UNFOLDS DIRECTLY OVER "YOU'RE CORDIALLY INVITED"
-       (Zero Blank Card: Envelope flaps unfold slowly over the invitation)
+       3D REALISTIC BUTTERFLY (SCENE 1 & SCENE 2)
+       ========================================================= */
+    .flying-butterfly-container {{
+      position: absolute;
+      top: 46.7%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.7);
+      width: 86px;
+      height: 78px;
+      pointer-events: none;
+      z-index: 48;
+      perspective: 900px;
+      opacity: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }}
+
+    .envelope-flaps-overlay.opened ~ .flying-butterfly-container,
+    .active .flying-butterfly-container.fly-active {{
+      opacity: 1;
+      animation: butterflyFlyUp 5.6s cubic-bezier(0.25, 1, 0.35, 1) forwards;
+    }}
+
+    .flying-butterfly-container.landed {{
+      animation: none !important;
+      top: 115px !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) scale(0.92) !important;
+      opacity: 1 !important;
+    }}
+
+    .butterfly-3d {{
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }}
+
+    .wing {{
+      position: absolute;
+      top: 0;
+      width: 48%;
+      height: 100%;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      will-change: transform;
+    }}
+
+    .wing-left {{
+      right: 50%;
+      background-image: url("{butterfly_wing_left_b64}");
+      background-position: right center;
+      transform-origin: right center;
+      animation: flapLeftWing 0.26s ease-in-out infinite alternate;
+    }}
+
+    .wing-right {{
+      left: 50%;
+      background-image: url("{butterfly_wing_right_b64}");
+      background-position: left center;
+      transform-origin: left center;
+      animation: flapRightWing 0.26s ease-in-out infinite alternate;
+    }}
+
+    .butterfly-body {{
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      width: 11%;
+      height: 100%;
+      background-image: url("{butterfly_body_b64}");
+      background-size: contain;
+      background-position: center top;
+      background-repeat: no-repeat;
+      z-index: 5;
+    }}
+
+    .butterfly-shadow {{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, 28px) scale(0.85, 0.35);
+      width: 72px;
+      height: 36px;
+      background: rgba(40, 20, 10, 0.28);
+      filter: blur(7px);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: shadowPulse 0.26s ease-in-out infinite alternate;
+    }}
+
+    @keyframes flapLeftWing {{
+      0% {{ transform: rotateY(12deg); }}
+      100% {{ transform: rotateY(78deg); }}
+    }}
+
+    @keyframes flapRightWing {{
+      0% {{ transform: rotateY(-12deg); }}
+      100% {{ transform: rotateY(-78deg); }}
+    }}
+
+    @keyframes shadowPulse {{
+      0% {{ transform: translate(-50%, 26px) scale(0.9, 0.36); opacity: 0.32; }}
+      100% {{ transform: translate(-50%, 32px) scale(0.72, 0.28); opacity: 0.16; }}
+    }}
+
+    @keyframes butterflyFlyUp {{
+      0% {{
+        top: 46.7%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.6) rotate(0deg);
+        opacity: 0;
+      }}
+      6% {{
+        top: 46.7%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.88) rotate(4deg);
+        opacity: 1;
+      }}
+      28% {{
+        top: 38%;
+        left: 44%;
+        transform: translate(-50%, -50%) scale(1.02) rotate(-14deg);
+        opacity: 1;
+      }}
+      58% {{
+        top: 24%;
+        left: 55%;
+        transform: translate(-50%, -50%) scale(1.06) rotate(11deg);
+        opacity: 1;
+      }}
+      84% {{
+        top: 14%;
+        left: 48%;
+        transform: translate(-50%, -50%) scale(0.98) rotate(-4deg);
+        opacity: 1;
+      }}
+      100% {{
+        top: 115px;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.92) rotate(0deg);
+        opacity: 1;
+      }}
+    }}
+
+    /* Scene 2 Perched Butterfly */
+    .perched-butterfly-couples {{
+      position: absolute;
+      top: 115px !important;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.92);
+      width: 86px;
+      height: 78px;
+      z-index: 10;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }}
+    .perched-butterfly-couples .perched-butterfly-img {{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 14px rgba(40, 20, 10, 0.25));
+    }}
+
+    /* =========================================================
+       3D REALISTIC OLIVE ENVELOPE (MATCHING REFERENCE IMAGES)
        ========================================================= */
     .envelope-flaps-overlay {{
       position: absolute;
@@ -191,16 +462,16 @@ html_content = f'''<!DOCTYPE html>
       left: 0;
       width: 100%;
       height: 100%;
-      border-radius: 8px;
-      transform-style: preserve-3d;
-      perspective: 1200px;
+      z-index: 40;
       pointer-events: auto;
-      z-index: 45;
       cursor: pointer;
+      perspective: 1400px;
+      transition: opacity 1.4s ease 4.2s, visibility 1.4s ease 4.2s;
     }}
-
     .envelope-flaps-overlay.opened {{
       pointer-events: none;
+      visibility: hidden;
+      opacity: 0;
     }}
 
     .flap {{
@@ -213,436 +484,403 @@ html_content = f'''<!DOCTYPE html>
       background-size: 100% 100%;
       background-position: center;
       background-repeat: no-repeat;
-      transition: transform 5.8s cubic-bezier(0.25, 1, 0.35, 1), opacity 1.6s ease 4.6s;
+      transform-style: preserve-3d;
+      transition: transform 3.8s cubic-bezier(0.25, 1, 0.35, 1), opacity 1.4s ease 2.6s;
       backface-visibility: hidden;
+      will-change: transform;
       z-index: 10;
     }}
 
     .flap-top {{
-      clip-path: polygon(0 0, 100% 0, 50.4% 46.2%);
+      clip-path: polygon(11.9% 0, 88.9% 0, 50% 46.7%);
       transform-origin: top center;
       z-index: 12;
       filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
     }}
 
     .flap-bottom {{
-      clip-path: polygon(0 100%, 100% 100%, 50.4% 46.2%);
+      clip-path: polygon(0 100%, 100% 100%, 50% 46.7%);
       transform-origin: bottom center;
       z-index: 11;
       filter: drop-shadow(0 -2px 4px rgba(0,0,0,0.3));
     }}
 
     .flap-left {{
-      clip-path: polygon(0 0, 50.4% 46.2%, 0 100%);
+      clip-path: polygon(0 0, 11.9% 0, 50% 46.7%, 0 100%);
       transform-origin: left center;
       z-index: 10;
       filter: drop-shadow(2px 0 4px rgba(0,0,0,0.3));
     }}
 
     .flap-right {{
-      clip-path: polygon(100% 0, 100% 100%, 50.4% 46.2%);
+      clip-path: polygon(88.9% 0, 100% 0, 100% 100%, 50% 46.7%);
       transform-origin: right center;
       z-index: 10;
       filter: drop-shadow(-2px 0 4px rgba(0,0,0,0.3));
     }}
 
     .envelope-flaps-overlay.opened .flap-top {{
-      transform: rotateX(160deg);
-      opacity: 0;
+      transform: rotateX(175deg);
     }}
     .envelope-flaps-overlay.opened .flap-bottom {{
-      transform: rotateX(-160deg);
-      opacity: 0;
+      transform: rotateX(-175deg);
     }}
     .envelope-flaps-overlay.opened .flap-left {{
-      transform: rotateY(-160deg);
-      opacity: 0;
+      transform: rotateY(-175deg);
     }}
     .envelope-flaps-overlay.opened .flap-right {{
-      transform: rotateY(160deg);
-      opacity: 0;
+      transform: rotateY(175deg);
     }}
 
+    /* Subtle Golden Leaf Lighting on Touch/Hover */
+    .leaf-glow-layer {{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("{leaf_glow_b64}");
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      z-index: 18;
+      opacity: 0;
+      mix-blend-mode: screen;
+      filter: drop-shadow(0 0 3px rgba(255, 230, 130, 0.75)) drop-shadow(0 0 8px rgba(212, 175, 55, 0.5));
+      transition: opacity 1.0s cubic-bezier(0.25, 1, 0.35, 1);
+    }}
+    .envelope-flaps-overlay:hover .leaf-glow-layer,
+    .envelope-flaps-overlay:active .leaf-glow-layer,
+    .envelope-flaps-overlay.lighting-active .leaf-glow-layer {{
+      opacity: 0.88;
+    }}
+    .envelope-flaps-overlay.opened .leaf-glow-layer {{
+      opacity: 0;
+      transition: opacity 2.2s ease 1.8s;
+    }}
+
+    /* 3D Gold Butterfly Wax Seal */
     .wax-seal {{
       position: absolute;
-      top: 46.2%;
-      left: 50.4%;
+      top: 46.7%;
+      left: 50%;
       transform: translate(-50%, -50%);
-      width: 96px;
-      height: 96px;
+      width: 102px;
+      height: 102px;
       background-image: url("{seal_b64}");
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
       z-index: 25;
       filter: drop-shadow(0 8px 18px rgba(0,0,0,0.5));
-      transition: all 0.5s ease;
+      transition: transform 0.4s ease, filter 0.4s ease;
       cursor: pointer;
     }}
-
+    .wax-seal:hover {{
+      transform: translate(-50%, -50%) scale(1.03);
+      filter: drop-shadow(0 10px 22px rgba(0,0,0,0.6));
+    }}
     .envelope-flaps-overlay.opened .wax-seal {{
       transform: translate(-50%, -50%) scale(1.3);
       opacity: 0;
       pointer-events: none;
-      transition: transform 2.8s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 2.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transition: transform 3.2s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 2.4s cubic-bezier(0.2, 0.8, 0.2, 1);
     }}
 
     /* =========================================================
-       SCENE 2: YOU'RE CORDIALLY INVITED
+       SCENE 1: YOU'RE CORDIALLY INVITED STYLING (IMAGE 3 & 4 MODEL)
        ========================================================= */
-    .bismillah {{
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 17px;
-      color: var(--gold-dark);
-      letter-spacing: 2px;
-      margin-top: 10px;
-      margin-bottom: 25px;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 1.4s ease 0.5s;
-    }}
-
-    .active .bismillah {{
-      opacity: 1;
-      transform: translateY(0);
-    }}
-
     .reveal-container {{
       text-align: center;
-      margin: auto 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
+      margin-top: 225px !important;
+      z-index: 10;
+      width: 100%;
+      max-width: 340px;
     }}
 
     .fade-youre {{
       font-family: 'Cinzel', serif;
-      font-size: 18px;
-      letter-spacing: 8px;
-      color: var(--burgundy-rich);
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 7px;
+      color: #8C7873;
+      text-transform: uppercase;
+      margin-bottom: 6px;
       opacity: 0;
-      filter: blur(8px);
-      transform: translateY(12px);
-      transition: all 1.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.8s;
+      filter: blur(6px);
+      transform: translateY(10px);
+      transition: all 1.8s cubic-bezier(0.2, 0.8, 0.2, 1) 3.6s;
     }}
 
     .fade-cordially {{
-      font-family: 'Cinzel', serif;
-      font-size: 38px;
+      font-family: 'Cinzel Decorative', 'Cinzel', serif;
+      font-size: 28px;
       font-weight: 700;
-      letter-spacing: 5px;
-      color: var(--burgundy-card);
-      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      letter-spacing: 8px;
+      color: #384239;
+      text-transform: uppercase;
+      margin-bottom: 4px;
       opacity: 0;
-      filter: blur(10px);
-      transform: scale(0.94) translateY(15px);
-      transition: all 1.8s cubic-bezier(0.2, 0.8, 0.2, 1) 1.8s;
-    }}
-
-    .fade-cordially .dot-o {{
-      position: relative;
-      display: inline-block;
-    }}
-    .fade-cordially .dot-o::after {{
-      content: "•";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 14px;
-      color: var(--burgundy-card);
+      filter: blur(8px);
+      transform: scale(0.95) translateY(12px);
+      transition: all 2.0s cubic-bezier(0.2, 0.8, 0.2, 1) 4.6s;
     }}
 
     .fade-invited {{
       font-family: 'Cinzel', serif;
-      font-size: 22px;
+      font-size: 20px;
+      font-weight: 600;
       letter-spacing: 7px;
-      color: var(--burgundy-rich);
+      color: #8C7873;
+      text-transform: uppercase;
+      margin-bottom: 12px;
       opacity: 0;
-      filter: blur(8px);
-      transform: translateY(12px);
-      transition: all 1.8s cubic-bezier(0.2, 0.8, 0.2, 1) 2.8s;
-    }}
-
-    .fade-subtext {{
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 18px;
-      color: var(--ink-muted);
-      margin-top: 15px;
-      max-width: 290px;
-      line-height: 1.45;
-      opacity: 0;
+      filter: blur(6px);
       transform: translateY(10px);
-      transition: all 1.8s ease 3.8s;
-    }}
-
-    .active .fade-youre,
-    .active .fade-cordially,
-    .active .fade-invited,
-    .active .fade-subtext {{
-      opacity: 1;
-      filter: blur(0px);
-      transform: scale(1) translateY(0);
+      transition: all 1.8s cubic-bezier(0.2, 0.8, 0.2, 1) 5.6s;
     }}
 
     .gold-divider {{
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      width: 80%;
-      margin: 16px 0;
+      width: 100%;
+      margin: 10px 0;
+      opacity: 0;
+      transition: opacity 1.5s ease 6.4s;
     }}
-
-    .gold-divider::before, .gold-divider::after {{
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
-    }}
-
     .gold-divider svg {{
-      width: 22px;
-      height: 22px;
+      width: 18px;
+      height: 18px;
       fill: var(--gold-primary);
     }}
 
-    .card-nav-row {{
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: auto;
-      padding-top: 14px;
+    .fade-subtext {{
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-style: italic;
+      color: #554446;
+      line-height: 1.5;
+      max-width: 290px;
+      margin: 0 auto;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 1.8s ease 7.0s;
     }}
 
-    .nav-link-btn {{
-      background: transparent;
-      border: 1px solid rgba(212, 175, 55, 0.4);
-      color: var(--burgundy-rich);
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
+    /* Settled or Opened Card Reveal */
+    .envelope-flaps-overlay.opened ~ .reveal-container .fade-youre,
+    .flying-butterfly-container.landed ~ .reveal-container .fade-youre,
+    .active .flying-butterfly-container.fly-active ~ .reveal-container .fade-youre {{
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
     }}
 
-    .nav-link-btn:hover {{
-      background: rgba(72, 12, 23, 0.08);
-      border-color: var(--gold-dark);
+    .envelope-flaps-overlay.opened ~ .reveal-container .fade-cordially,
+    .flying-butterfly-container.landed ~ .reveal-container .fade-cordially,
+    .active .flying-butterfly-container.fly-active ~ .reveal-container .fade-cordially {{
+      opacity: 1;
+      filter: blur(0);
+      transform: scale(1) translateY(0);
     }}
 
-    .gold-btn {{
-      background: var(--gold-gradient);
-      color: #380811;
-      border: 1px solid #AA7C11;
-      padding: 10px 22px;
-      border-radius: 25px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      cursor: pointer;
-      box-shadow: 0 4px 14px rgba(154, 119, 32, 0.35);
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      text-decoration: none;
-      margin-left: auto;
+    .envelope-flaps-overlay.opened ~ .reveal-container .fade-invited,
+    .flying-butterfly-container.landed ~ .reveal-container .fade-invited,
+    .active .flying-butterfly-container.fly-active ~ .reveal-container .fade-invited {{
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
     }}
 
-    .gold-btn:hover {{
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(154, 119, 32, 0.5);
-      filter: brightness(1.05);
+    .envelope-flaps-overlay.opened ~ .reveal-container .gold-divider,
+    .flying-butterfly-container.landed ~ .reveal-container .gold-divider,
+    .active .flying-butterfly-container.fly-active ~ .reveal-container .gold-divider {{
+      opacity: 1;
+    }}
+
+    .envelope-flaps-overlay.opened ~ .reveal-container .fade-subtext,
+    .flying-butterfly-container.landed ~ .reveal-container .fade-subtext,
+    .active .flying-butterfly-container.fly-active ~ .reveal-container .fade-subtext {{
+      opacity: 1;
+      transform: translateY(0);
     }}
 
     /* =========================================================
-       SCENE 3: WE'RE GETTING MARRIED - TWIN COUPLES
+       SCENE 2: WE'RE GETTING MARRIED & CALLIGRAPHY INK REVEAL
        ========================================================= */
-    .title-banner {{
-      font-family: 'Cinzel', serif;
-      font-size: 13px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--burgundy-card);
-      font-weight: 600;
-      margin-top: 4px;
-      margin-bottom: 2px;
-    }}
-
-    .subtitle-banner {{
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 15px;
-      color: var(--ink-muted);
-      margin-bottom: 10px;
-    }}
-
-    .twins-badge {{
-      background: rgba(72, 12, 23, 0.07);
-      border: 1px dashed var(--gold-primary);
-      padding: 4px 14px;
-      border-radius: 20px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 10px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--burgundy-rich);
-      font-weight: 600;
-      margin-bottom: 12px;
-    }}
-
-    .scene-body-content {{
+    .married-model-container {{
+      text-align: center;
+      margin-top: 225px !important;
       width: 100%;
-      margin: auto 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      flex-grow: 1;
+      z-index: 10;
     }}
 
-    .couples-stack {{
+    .married-banner-title {{
+      font-family: 'Cinzel', serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 5px;
+      color: #7D6B68;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      text-align: center;
+    }}
+
+    .couple-calligraphy-wrap {{
+      position: relative;
       width: 100%;
+      max-width: 360px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      margin: auto 0;
-    }}
-
-    .couple-card {{
-      background: rgba(255, 255, 255, 0.65);
-      border: 1px solid rgba(212, 175, 55, 0.35);
-      border-radius: 12px;
-      padding: 12px 10px;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0;
       text-align: center;
-      position: relative;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
     }}
 
-    .couple-role {{
-      font-family: 'Montserrat', sans-serif;
-      font-size: 9px;
+    .groom-calligraphy {{
+      font-family: 'Alex Brush', 'Great Vibes', cursive;
+      font-size: 62px;
+      color: #4A584C;
+      line-height: 1.15;
       letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--gold-dark);
-      font-weight: 600;
+      position: relative;
+      z-index: 3;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      text-align: center;
       margin-bottom: 2px;
     }}
 
-    .bride-name {{
-      font-family: 'Great Vibes', cursive;
-      font-size: 32px;
-      color: var(--burgundy-card);
-      line-height: 1.1;
-      text-shadow: 0 1px 1px rgba(0,0,0,0.05);
-    }}
-
-    .ampersand {{
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 18px;
-      color: var(--gold-primary);
-      margin: 1px 0;
-    }}
-
-    .groom-name {{
-      font-family: 'Cinzel', serif;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      color: var(--ink-dark);
-      margin-top: 1px;
-    }}
-
-    .couple-sub {{
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 12px;
-      color: var(--ink-muted);
-      margin-top: 3px;
-    }}
-
-    /* =========================================================
-       SLOW CALLIGRAPHY HANDWRITING REVEAL ANIMATION
-       ========================================================= */
-    .write-wrap {{
-      position: relative;
-      display: inline-block;
-      text-align: center;
-      margin: 1px auto;
-    }}
-
-    .write-text {{
-      display: inline-block;
-      white-space: nowrap;
-      clip-path: inset(0 100% 0 0);
-      opacity: 0;
-    }}
-
-    .pen-nib {{
+    .calligraphy-ampersand {{
       position: absolute;
       top: 50%;
-      width: 6px;
-      height: 6px;
-      background: radial-gradient(circle, #FFF5D6 0%, #D4AF37 70%, #9B7811 100%);
-      border-radius: 50%;
-      box-shadow: 0 0 10px 2px rgba(212, 175, 55, 0.85);
+      left: 64%;
+      transform: translate(-50%, -50%) scale(0.8);
+      font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+      font-size: 96px;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(212, 165, 154, 0.58);
+      z-index: 1;
       pointer-events: none;
+      line-height: 1;
+      user-select: none;
       opacity: 0;
-      transform: translate(-50%, -50%);
+      filter: blur(6px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 1.45s, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) 1.45s, filter 0.8s ease 1.45s;
     }}
 
-    @keyframes writeReveal {{
-      0% {{
-        clip-path: inset(0 100% 0 0);
-        opacity: 0.15;
-      }}
-      5% {{
-        opacity: 1;
-      }}
-      100% {{
-        clip-path: inset(0 0% 0 0);
-        opacity: 1;
-      }}
+    .active .calligraphy-ampersand {{
+      opacity: 1;
+      filter: blur(0);
+      transform: translate(-50%, -50%) scale(1);
     }}
 
-    @keyframes penNibGlide {{
-      0% {{
-        left: 0%;
-        opacity: 0;
-      }}
-      4% {{
-        opacity: 1;
-      }}
-      94% {{
-        left: 100%;
-        opacity: 1;
-      }}
-      100% {{
-        left: 100%;
-        opacity: 0;
-      }}
+    .bride-calligraphy {{
+      font-family: 'Alex Brush', 'Great Vibes', cursive;
+      font-size: 52px;
+      color: #4A584C;
+      line-height: 1.15;
+      letter-spacing: 1.5px;
+      position: relative;
+      z-index: 3;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      margin-top: 2px;
     }}
 
-    @keyframes softFadeScale {{
+    /* Letter-by-Letter Flowing Ink Reveal Effect */
+    .char-span {{
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(10px) scale(0.9);
+      filter: blur(4px);
+      transition: opacity 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.45s ease;
+      will-change: opacity, transform, filter;
+    }}
+    .char-space {{
+      display: inline-block;
+      width: 10px;
+    }}
+
+    /* Afsal letter-by-letter reveal (first) */
+    .active .groom-calligraphy .char-span:nth-child(1) {{ transition-delay: 0.50s; opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }}
+    .active .groom-calligraphy .char-span:nth-child(2) {{ transition-delay: 0.68s; opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }}
+    .active .groom-calligraphy .char-span:nth-child(3) {{ transition-delay: 0.86s; opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }}
+    .active .groom-calligraphy .char-span:nth-child(4) {{ transition-delay: 1.04s; opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }}
+    .active .groom-calligraphy .char-span:nth-child(5) {{ transition-delay: 1.22s; opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }}
+
+    /* Najila Ashraf letter-by-letter reveal (after ampersand) */
+    .active .bride-calligraphy .char-span:nth-of-type(1)  {{ transition-delay: 1.80s; opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }}
+    .active .bride-calligraphy .char-span:nth-of-type(2)  {{ transition-delay: 1.95s; opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }}
+    .active .bride-calligraphy .char-span:nth-of-type(3)  {{ transition-delay: 2.10s; opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }}
+    .active .bride-calligraphy .char-span:nth-of-type(4)  {{ transition-delay: 2.25s; opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }}
+    .active .bride-calligraphy .char-span:nth-of-type(5)  {{ transition-delay: 2.40s; opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }}
+    .active .bride-calligraphy .char-span:nth-of-type(6)  {{ transition-delay: 2.55s; opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }}
+    .active .bride-calligraphy .char-span:nth-of-type(7)  {{ transition-delay: 2.75s; opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }}
+    .active .bride-calligraphy .char-span:nth-of-type(8)  {{ transition-delay: 2.90s; opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }}
+    .active .bride-calligraphy .char-span:nth-of-type(9)  {{ transition-delay: 3.05s; opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }}
+    .active .bride-calligraphy .char-span:nth-of-type(10) {{ transition-delay: 3.20s; opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }}
+    .active .bride-calligraphy .char-span:nth-of-type(11) {{ transition-delay: 3.35s; opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }}
+    .active .bride-calligraphy .char-span:nth-of-type(12) {{ transition-delay: 3.50s; opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }}
+
+    /* =========================================================
+       SCENE 3: WEDDING CELEBRATION PORTRAIT & GRACEFUL CIRCLE SPIN
+       ========================================================= */
+    #scene-portrait {{
+      padding: 0 !important;
+      overflow: hidden;
+      background: #FAF7F2;
+      border: 3px solid #364238;
+      outline: 2px solid rgba(212, 175, 55, 0.5);
+      outline-offset: -3px;
+    }}
+
+    .scene3-artwork-container {{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      cursor: pointer;
+    }}
+
+    /* 4-Frame Cross-Dissolve Spin Animation */
+    .spin-frame {{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 64px);
+      object-fit: contain !important;
+      object-position: center center;
+      background: #FAF7F2;
+      display: block;
+      opacity: 0;
+      transition: opacity 0.18s ease-in-out;
+      pointer-events: none;
+    }}
+
+    .spin-frame.active-frame {{
+      opacity: 1 !important;
+    }}
+
+    /* Subtle luxury entrance fade */
+    .active .scene3-artwork-container {{
+      animation: scene3CardReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }}
+
+    @keyframes scene3CardReveal {{
       0% {{
-        opacity: 0;
-        transform: scale(0.88);
+        opacity: 0.88;
+        transform: scale(0.99);
       }}
       100% {{
         opacity: 1;
@@ -650,1101 +888,638 @@ html_content = f'''<!DOCTYPE html>
       }}
     }}
 
-    /* Active triggers for Couple 1 (Salmabee & Muhammed Ajnas) */
-    #scene-couples.active .bride-write-1 .write-text {{
-      animation: writeReveal 2.6s cubic-bezier(0.35, 0, 0.25, 1) 0.6s forwards;
-    }}
-    #scene-couples.active .bride-write-1 .pen-nib {{
-      animation: penNibGlide 2.6s cubic-bezier(0.35, 0, 0.25, 1) 0.6s forwards;
-    }}
-
-    #scene-couples.active .ampersand-1 {{
-      opacity: 0;
-      animation: softFadeScale 1.0s ease 3.0s forwards;
-    }}
-
-    #scene-couples.active .groom-write-1 .write-text {{
-      animation: writeReveal 2.0s cubic-bezier(0.35, 0, 0.25, 1) 3.3s forwards;
-    }}
-    #scene-couples.active .groom-write-1 .pen-nib {{
-      animation: penNibGlide 2.0s cubic-bezier(0.35, 0, 0.25, 1) 3.3s forwards;
-    }}
-
-    #scene-couples.active .sub-1 {{
-      opacity: 0;
-      animation: softFadeScale 1.2s ease 4.2s forwards;
-    }}
-
-    /* Active triggers for Couple 2 (Rahmabee & Shahbaz Muhammed) */
-    #scene-couples.active .bride-write-2 .write-text {{
-      animation: writeReveal 2.6s cubic-bezier(0.35, 0, 0.25, 1) 5.2s forwards;
-    }}
-    #scene-couples.active .bride-write-2 .pen-nib {{
-      animation: penNibGlide 2.6s cubic-bezier(0.35, 0, 0.25, 1) 5.2s forwards;
-    }}
-
-    #scene-couples.active .ampersand-2 {{
-      opacity: 0;
-      animation: softFadeScale 1.0s ease 7.6s forwards;
-    }}
-
-    #scene-couples.active .groom-write-2 .write-text {{
-      animation: writeReveal 2.0s cubic-bezier(0.35, 0, 0.25, 1) 7.9s forwards;
-    }}
-    #scene-couples.active .groom-write-2 .pen-nib {{
-      animation: penNibGlide 2.0s cubic-bezier(0.35, 0, 0.25, 1) 7.9s forwards;
-    }}
-
-    #scene-couples.active .sub-2 {{
-      opacity: 0;
-      animation: softFadeScale 1.2s ease 8.8s forwards;
-    }}
-
-    /* =========================================================
-       SCENE 4: STANDARDIZED FULL-IMAGE COUPLES PORTRAIT
-       (Both couples move from two sides into exact place; no blinking lights)
-       ========================================================= */
-    #scene-portrait {{
-      padding: 0 !important;
-      overflow: hidden !important;
-      position: relative;
-      background: #FAF6EF;
-      border: 6px solid #480C17;
-      outline: 2px solid var(--gold-primary);
-      outline-offset: -3px;
-    }}
-
-    .full-artwork-container {{
-      position: relative;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-    }}
-
-    /* Base background layer (Flowers + Golden Names) */
-    .couples-bg-layer {{
+    /* Interactive Spin Option Pill */
+    .spin-action-pill {{
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      display: block;
-      z-index: 1;
-    }}
-
-    /* Left Bride & Groom (Salmabee & Muhammed Ajnas) moves from left side */
-    .couple-left-layer {{
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      display: block;
-      pointer-events: none;
-      z-index: 3;
-      transform: translateX(-24%);
-      opacity: 0;
-      transition: transform 2.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.6s ease;
-      will-change: transform, opacity;
-    }}
-
-    /* Right Bride & Groom (Rahmabee & Shahbaz Muhammed) moves from right side */
-    .couple-right-layer {{
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-      display: block;
-      pointer-events: none;
-      z-index: 3;
-      transform: translateX(24%);
-      opacity: 0;
-      transition: transform 2.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.6s ease;
-      will-change: transform, opacity;
-    }}
-
-    /* When Scene 4 opens: Both couples glide in from the two sides to their exact place! */
-    .active .couple-left-layer {{
-      transform: translateX(0);
-      opacity: 1;
-    }}
-
-    .active .couple-right-layer {{
-      transform: translateX(0);
-      opacity: 1;
-    }}
-
-    .portrait-nav-overlay {{
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      padding: 30px 18px 16px 18px;
-      background: linear-gradient(to top, rgba(24, 2, 5, 0.88) 0%, rgba(24, 2, 5, 0.6) 65%, transparent 100%);
+      top: 16px;
+      left: 16px;
+      z-index: 25;
+      background: rgba(255, 255, 255, 0.90);
+      border: 1px solid rgba(190, 165, 115, 0.5);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      color: #38453A;
+      box-shadow: 0 2px 10px rgba(56, 69, 58, 0.10);
+      cursor: pointer;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      z-index: 20;
-    }}
-
-    .portrait-nav-overlay .nav-link-btn {{
-      color: var(--gold-light);
-      border-color: rgba(212, 175, 55, 0.5);
-      background: rgba(30, 4, 8, 0.5);
+      gap: 5px;
+      transition: all 0.25s ease;
       backdrop-filter: blur(4px);
     }}
 
-    .portrait-nav-overlay .nav-link-btn:hover {{
-      background: rgba(212, 175, 55, 0.2);
-      color: #FFF;
+    .spin-action-pill:hover {{
+      background: #FFFFFF;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(56, 69, 58, 0.18);
+      border-color: rgba(190, 165, 115, 0.8);
     }}
 
-    .portrait-nav-overlay .gold-btn {{
-      box-shadow: 0 4px 18px rgba(0,0,0,0.5);
+    .spin-action-pill.spinning {{
+      border-color: #38453A;
+      background: #FAF7F2;
+      box-shadow: 0 0 12px rgba(190, 165, 115, 0.4);
+    }}
+
+    .scene3-nav-overlay {{
+      position: absolute;
+      bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 12px));
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 max(16px, env(safe-area-inset-left, 16px));
+      box-sizing: border-box;
+      z-index: 20;
     }}
 
     /* =========================================================
-       SCENE 5: CEREMONY DETAILS (FROM IMAGE 5)
+       SCENE 4: CEREMONY RECEPTION (EDGE-TO-EDGE FULL PAGE ARTWORK)
        ========================================================= */
-    .card-top-header {{
-      font-family: 'Cinzel', serif;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2.2px;
-      color: var(--burgundy-card);
-      text-align: center;
-      margin-top: 10px;
-      margin-bottom: 10px;
+    #scene-details {{
+      padding: 0 !important;
+      overflow: hidden;
+      border: 3px solid #364238;
+      outline: 2px solid rgba(212, 175, 55, 0.5);
+      outline-offset: -3px;
+      background: #F5F6F0;
     }}
 
-    .parents-section {{
-      text-align: center;
-      margin-bottom: 12px;
-    }}
-
-    .parents-names {{
-      font-family: 'Playfair Display', serif;
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--ink-dark);
-      letter-spacing: 0.4px;
-    }}
-
-    .residence-line {{
-      font-family: 'Montserrat', sans-serif;
-      font-size: 11px;
-      color: var(--ink-muted);
-      margin-top: 4px;
-    }}
-
-    .invite-text {{
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 15px;
-      font-style: italic;
-      color: var(--ink-dark);
-      text-align: center;
-      line-height: 1.45;
-      margin: 10px auto 18px auto;
-      max-width: 340px;
-    }}
-
-    .couples-detail-grid {{
+    .scene4-artwork-container {{
+      position: relative;
       width: 100%;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 6px;
-      margin-bottom: 22px;
-    }}
-
-    .couple-detail-box {{
-      background: rgba(255, 255, 255, 0.8);
-      border: 1.5px solid rgba(212, 175, 55, 0.45);
-      border-radius: 12px;
-      padding: 22px 10px;
-      text-align: center;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+      height: 100%;
       display: flex;
       flex-direction: column;
+      align-items: center;
       justify-content: center;
+      overflow: hidden;
+      background: #F5F6F0;
     }}
 
-    .quran-blessing {{
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 13.5px;
-      font-style: italic;
-      color: var(--gold-dark);
-      text-align: center;
-      line-height: 1.4;
-      margin: 10px auto 20px auto;
-      max-width: 320px;
-      padding: 10px 14px;
-      border-top: 1px solid rgba(212, 175, 55, 0.3);
-      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    .scene4-card-img {{
+      width: 100%;
+      height: 100%;
+      object-fit: contain !important;
+      object-position: center 40%;
+      background: #F5F6F0;
+      display: block;
+    }}
+
+    .scene4-nav-overlay {{
+      position: absolute;
+      bottom: max(16px, calc(env(safe-area-inset-bottom, 0px) + 12px));
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 max(16px, env(safe-area-inset-left, 16px));
+      box-sizing: border-box;
+      z-index: 20;
+    }}
+
+    /* =========================================================
+       SCENE 5: CEREMONY SCHEDULE & AUSPICIOUS DAY (AUTHENTIC IMAGE 2 DATA)
+       ========================================================= */
+    #scene-schedule {{
+      background-image: url("{scene5_bg_b64}");
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+    }}
+
+    .scene5-body-content {{
+      width: 100%;
+      padding-top: 105px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 10;
     }}
 
     .insha-allah-header {{
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-      color: var(--gold-dark);
-      letter-spacing: 2.5px;
+      font-family: 'Amiri', 'Cinzel', serif;
+      font-size: 16px;
+      color: #38453A;
+      letter-spacing: 1px;
+      margin-bottom: 2px;
       text-align: center;
-      margin-top: 14px;
-      margin-bottom: 4px;
     }}
 
     .insha-allah-sub {{
       font-family: 'Cinzel', serif;
-      font-size: 14.5px;
+      font-size: 11.5px;
       font-weight: 700;
-      color: var(--burgundy-card);
-      letter-spacing: 2.5px;
+      letter-spacing: 4px;
+      color: #7D6B68;
+      text-transform: uppercase;
+      margin-bottom: 8px;
       text-align: center;
-      margin-bottom: 18px;
     }}
 
-    .c-union-tag {{
-      font-family: 'Montserrat', sans-serif;
-      font-size: 8px;
-      letter-spacing: 1.5px;
+    /* Main Wedding Reception Card (Image 2 Model) */
+    .schedule-main-card {{
+      width: 100%;
+      background: rgba(255, 255, 255, 0.90);
+      border: 1.5px solid rgba(190, 165, 115, 0.5);
+      border-radius: 12px;
+      padding: 11px 14px;
+      text-align: center;
+      box-shadow: 0 4px 14px rgba(56, 66, 57, 0.06);
+      margin-bottom: 8px;
+    }}
+
+    .schedule-event-badge {{
+      font-family: 'Cinzel', serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #8C7873;
       text-transform: uppercase;
-      color: var(--gold-dark);
+      margin-bottom: 3px;
+    }}
+
+    .schedule-date-title {{
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #38453A;
+      line-height: 1.2;
+    }}
+
+    .schedule-time-title {{
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-style: italic;
       font-weight: 600;
+      color: #4A584C;
+      margin-top: 2px;
       margin-bottom: 4px;
     }}
 
-    .c-bride {{
-      font-family: 'Great Vibes', cursive;
-      font-size: 28px;
-      color: var(--burgundy-card);
-      line-height: 1.1;
+    .schedule-gold-rule {{
+      width: 45px;
+      height: 1px;
+      background: rgba(190, 165, 115, 0.5);
+      margin: 5px auto;
     }}
 
-    .c-with {{
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 11px;
-      font-style: italic;
-      color: var(--ink-muted);
-    }}
-
-    .c-groom {{
+    .schedule-venue-name {{
       font-family: 'Cinzel', serif;
-      font-size: 13.5px;
+      font-size: 12px;
       font-weight: 700;
-      color: var(--ink-dark);
-      margin: 1px 0;
+      letter-spacing: 0.8px;
+      color: #2E3830;
+      margin-top: 3px;
     }}
 
-    .c-parentage {{
+    .venue-sub-tag {{
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-style: italic;
+      font-weight: 500;
+      color: #6C5B5D;
+    }}
+
+    .schedule-venue-city {{
       font-family: 'Montserrat', sans-serif;
-      font-size: 9px;
-      color: var(--ink-muted);
-      line-height: 1.3;
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      color: #556658;
+      text-transform: uppercase;
       margin-top: 2px;
     }}
 
-    .insha-allah {{
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--gold-dark);
-      letter-spacing: 1px;
-      text-align: center;
-      margin: 2px 0 6px 0;
-    }}
-
-    .event-info-cards {{
+    /* Nikah Ceremony Box (Image 2 Model) */
+    .schedule-nikah-card {{
       width: 100%;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 26px;
-    }}
-
-    .info-card {{
-      background: #480C17;
-      color: #fff;
-      border-radius: 12px;
-      padding: 18px 6px;
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(190, 165, 115, 0.45);
+      border-radius: 10px;
+      padding: 9px 12px;
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      border: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 3px 12px rgba(56, 66, 57, 0.05);
+      margin-bottom: 8px;
     }}
 
-    .info-card .icon {{
-      font-size: 15px;
-      margin-bottom: 2px;
-    }}
-
-    .info-card .label {{
-      font-family: 'Montserrat', sans-serif;
-      font-size: 8px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--gold-light);
-    }}
-
-    .info-card .main-val {{
+    .nikah-tag {{
       font-family: 'Cinzel', serif;
-      font-size: 13px;
+      font-size: 9px;
       font-weight: 700;
-      color: #fff;
-      margin: 2px 0;
+      letter-spacing: 1.5px;
+      color: #8C7873;
+      text-transform: uppercase;
+      margin-bottom: 3px;
     }}
 
-    .info-card .sub-val {{
+    .nikah-text {{
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13.5px;
+      color: #38453A;
+      line-height: 1.35;
+      margin: 0;
+    }}
+
+    .nikah-text strong {{
       font-family: 'Montserrat', sans-serif;
-      font-size: 7.5px;
-      color: #E2D3D5;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #2E3830;
     }}
 
+    .nikah-datetime {{
+      display: inline-block;
+      margin-top: 2px;
+      color: #4A584C;
+    }}
+
+    /* Live Countdown Box (Highlighted Royal Card) */
     .countdown-wrap {{
-      width: 100%;
-      background: rgba(72, 12, 23, 0.05);
-      border: 1.5px solid rgba(212, 175, 55, 0.38);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 251, 242, 0.96) 50%, rgba(250, 244, 230, 0.94) 100%);
+      border: 1.5px solid rgba(212, 175, 55, 0.75);
+      outline: 2px solid rgba(212, 175, 55, 0.28);
+      outline-offset: -4px;
       border-radius: 14px;
-      padding: 16px 14px;
+      padding: 10px 12px 10px 12px;
+      width: 100%;
       text-align: center;
-      margin-bottom: 24px;
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.22), 0 2px 8px rgba(56, 66, 57, 0.08);
+      margin-bottom: 8px;
+      position: relative;
+      animation: auspiciousGlow 3.5s ease-in-out infinite;
+    }}
+
+    @keyframes auspiciousGlow {{
+      0%, 100% {{
+        box-shadow: 0 4px 18px rgba(212, 175, 55, 0.20), 0 0 0 1px rgba(212, 175, 55, 0.45);
+      }}
+      50% {{
+        box-shadow: 0 6px 24px rgba(212, 175, 55, 0.35), 0 0 0 1.5px rgba(212, 175, 55, 0.85);
+      }}
     }}
 
     .countdown-label {{
-      font-family: 'Montserrat', sans-serif;
-      font-size: 8.5px;
-      letter-spacing: 1.5px;
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.2px;
+      color: #8C6D23;
       text-transform: uppercase;
-      color: var(--gold-dark);
-      font-weight: 600;
-      margin-bottom: 3px;
+      margin-bottom: 7px;
+      text-shadow: 0 1px 2px rgba(212, 175, 55, 0.25);
     }}
 
     .timer-units {{
       display: flex;
-      justify-content: center;
-      gap: 10px;
+      justify-content: space-around;
+      align-items: center;
+      gap: 6px;
     }}
 
     .timer-unit {{
+      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.90);
+      border: 1px solid rgba(212, 175, 55, 0.40);
+      border-radius: 8px;
+      padding: 5px 6px 4px 6px;
+      box-shadow: 0 2px 6px rgba(180, 150, 100, 0.10);
     }}
 
     .timer-unit .num {{
-      font-family: 'Cinzel', serif;
-      font-size: 20px;
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
       font-weight: 700;
-      color: var(--burgundy-card);
+      color: #2E3830;
+      line-height: 1.1;
+      text-shadow: 0 1px 2px rgba(212, 175, 55, 0.25);
     }}
 
     .timer-unit .unit {{
       font-family: 'Montserrat', sans-serif;
-      font-size: 7.5px;
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      color: #7D6B48;
       text-transform: uppercase;
-      color: var(--ink-muted);
+      margin-top: 2px;
     }}
 
     .compliments-note {{
       font-family: 'Cormorant Garamond', serif;
-      font-size: 13.5px;
       font-style: italic;
-      color: var(--ink-muted);
+      font-size: 13px;
+      color: #556658;
+      line-height: 1.35;
       text-align: center;
-      border-top: 1px solid rgba(212, 175, 55, 0.3);
-      padding-top: 14px;
-      margin-bottom: 20px;
-      width: 100%;
-      line-height: 1.5;
+      margin-top: 2px;
     }}
 
-    .action-row {{
-      display: flex;
-      gap: 10px;
-      width: 100%;
-      margin-bottom: 16px;
-    }}
-
-    .action-btn {{
-      flex: 1;
-      padding: 10px 12px;
-      border-radius: 6px;
-      border: 1px solid var(--gold-primary);
-      background: #FFF;
-      color: var(--burgundy-rich);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 9.5px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }}
-
-    .action-btn:hover {{
-      background: var(--burgundy-rich);
-      color: #fff;
+    .compliments-note strong {{
+      font-family: 'Cinzel', serif;
+      font-style: normal;
+      font-size: 10.5px;
+      letter-spacing: 0.8px;
+      color: #38453A;
+      display: block;
+      margin-top: 2px;
     }}
 
     /* =========================================================
-       SCENE 6: VENUE, ADDRESS & ACCURATE GOOGLE MAP DIRECTIONS
+       SCENE 6: VENUE & ROUTE MAP (DUAL VENUE: WEDDING & NIKAH)
        ========================================================= */
+    #scene-map {{
+      padding: 20px 16px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      background: #FAF7F2;
+      background-image: radial-gradient(ellipse at 50% 35%, #FFFFFF 0%, #FAF7F2 70%, #F5EFE6 100%);
+      border: 3px solid #364238;
+      outline: 2px solid rgba(212, 175, 55, 0.5);
+      outline-offset: -3px;
+      overflow: hidden;
+    }}
+
+    .scene6-body-content {{
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }}
+
     .venue-title {{
       font-family: 'Cinzel', serif;
-      font-size: 17px;
+      font-size: 14px;
+      letter-spacing: 2.5px;
+      color: #2E3830;
       font-weight: 700;
-      color: var(--burgundy-card);
-      letter-spacing: 2px;
       text-align: center;
+      text-transform: uppercase;
       margin-bottom: 2px;
     }}
 
     .venue-sub {{
       font-family: 'Cormorant Garamond', serif;
-      font-size: 13.5px;
-      color: var(--ink-muted);
-      margin-bottom: 8px;
+      font-size: 12.5px;
+      font-style: italic;
+      color: #556658;
+      text-align: center;
+      margin-bottom: 10px;
+    }}
+
+    /* Dual Venue Tab Switcher */
+    .venue-tab-switcher {{
+      display: flex;
+      gap: 8px;
+      width: 100%;
+      margin-bottom: 10px;
+      justify-content: center;
+    }}
+
+    .venue-tab-btn {{
+      flex: 1;
+      padding: 7px 6px;
+      border-radius: 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      border: 1px solid rgba(190, 165, 115, 0.45);
+      background: rgba(255, 255, 255, 0.85);
+      color: #4A584C;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      box-shadow: 0 2px 6px rgba(56, 66, 57, 0.04);
+    }}
+
+    .venue-tab-btn.active {{
+      background: #38453A;
+      color: #FAF7F2;
+      border-color: rgba(190, 165, 115, 0.6);
+      box-shadow: 0 3px 10px rgba(45, 55, 47, 0.20);
     }}
 
     .address-card {{
+      background: rgba(255, 255, 255, 0.90);
+      border: 1.5px solid rgba(190, 165, 115, 0.5);
+      border-radius: 12px;
+      padding: 9px 14px;
       width: 100%;
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid rgba(212, 175, 55, 0.4);
-      border-radius: 8px;
-      padding: 10px;
+      box-sizing: border-box;
       text-align: center;
-      margin-bottom: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      margin-bottom: 10px;
+      box-shadow: 0 4px 14px rgba(56, 66, 57, 0.05);
+    }}
+
+    .venue-event-badge {{
+      font-family: 'Cinzel', serif;
+      font-size: 8.5px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #8C7873;
+      text-transform: uppercase;
+      margin-bottom: 2px;
     }}
 
     .residence-name {{
-      font-family: 'Playfair Display', serif;
-      font-size: 15px;
+      font-family: 'Cinzel', serif;
+      font-size: 12.5px;
       font-weight: 700;
-      color: var(--burgundy-rich);
+      letter-spacing: 0.8px;
+      color: #2E3830;
+      margin-bottom: 2px;
     }}
 
     .full-address {{
-      font-family: 'Montserrat', sans-serif;
-      font-size: 10.5px;
-      color: var(--ink-dark);
-      margin-top: 3px;
-      line-height: 1.4;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      color: #4A584C;
+      line-height: 1.3;
     }}
 
-    .phone-contact {{
-      font-family: 'Montserrat', sans-serif;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--burgundy-card);
-      margin-top: 4px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      text-decoration: none;
-    }}
-
-    /* Direct Google Maps Embed Container - Fills screen fully */
-    #scene-map {{
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 100%;
-      padding: 30px 18px 16px 18px;
-    }}
-
+    /* Reduced compact map frame (180px height) */
     .gmap-frame-box {{
       width: 100%;
-      flex: 1;
-      min-height: 280px;
-      border-radius: 10px;
-      border: 2px solid var(--gold-primary);
-      margin-top: 4px;
-      margin-bottom: 12px;
+      height: 180px;
+      max-height: 185px;
+      flex: none;
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-      position: relative;
+      border: 1.5px solid rgba(190, 165, 115, 0.5);
+      margin-bottom: 10px;
+      box-shadow: 0 4px 12px rgba(56, 66, 57, 0.08);
+      box-sizing: border-box;
+      background: #ECE7DE;
     }}
 
     .gmap-frame-box iframe {{
       width: 100%;
       height: 100%;
-      border: 0;
+      border: none;
       display: block;
     }}
 
-    /* Clean Focused Directions Buttons (WhatsApp & Call Host REMOVED) */
     .directions-btn-grid {{
-      width: 100%;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 8px;
-      margin-bottom: 6px;
+      width: 100%;
+      margin-bottom: 12px;
+      box-sizing: border-box;
     }}
 
     .dir-action-btn {{
-      padding: 9px 8px;
-      border-radius: 6px;
-      border: 1px solid var(--gold-primary);
-      background: #480C17;
-      color: #FFF;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 10px;
+      padding: 8px 10px;
+      border-radius: 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 9.5px;
       font-weight: 600;
-      letter-spacing: 0.5px;
-      cursor: pointer;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-decoration: none;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 5px;
-      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid rgba(190, 165, 115, 0.5);
+      background: rgba(255, 255, 255, 0.90);
+      color: #38453A;
+      box-shadow: 0 2px 8px rgba(56, 66, 57, 0.05);
       transition: all 0.25s ease;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }}
 
     .dir-action-btn:hover {{
-      background: #651423;
+      background: #FFFFFF;
+      border-color: rgba(190, 165, 115, 0.8);
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     }}
 
     .dir-action-btn.primary-directions {{
-      background: var(--gold-gradient);
-      color: #380811;
-      border-color: #AA7C11;
-      font-weight: 700;
+      background: #38453A;
+      color: #FAF7F2;
+      border: 1px solid rgba(190, 165, 115, 0.5);
+      box-shadow: 0 4px 12px rgba(45, 55, 47, 0.22);
     }}
 
     .dir-action-btn.primary-directions:hover {{
-      filter: brightness(1.06);
+      background: #2D372F;
+    }}
+
+    .scene6-nav-row {{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2px;
+      box-sizing: border-box;
+    }}
+
+    /* =========================================================
+       BOTTOM NAVIGATION ROW & BUTTONS
+       ========================================================= */
+    .card-nav-row {{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 12px;
+      margin-top: auto;
+      z-index: 25;
+    }}
+
+    .gold-btn {{
+      padding: 10px 22px;
+      background: #38453A;
+      color: #FAF7F2;
+      border: 1px solid rgba(190, 165, 115, 0.5);
+      border-radius: 24px;
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(45, 55, 47, 0.22);
+      transition: all 0.25s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }}
+    .gold-btn:hover {{
+      background: #2B362D;
+      border-color: #D4AF37;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(45, 55, 47, 0.32);
+    }}
+
+    .nav-link-btn {{
+      padding: 8px 18px;
+      background: rgba(56, 69, 58, 0.06);
+      color: #38453A;
+      border: 1px solid rgba(56, 69, 58, 0.22);
+      border-radius: 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }}
+    .nav-link-btn:hover {{
+      background: rgba(56, 69, 58, 0.12);
+      border-color: #38453A;
     }}
 
     .toast {{
       position: fixed;
-      top: 20px;
+      bottom: 24px;
       left: 50%;
-      transform: translateX(-50%) translateY(-20px);
-      background: #480C17;
-      color: #FFF;
+      transform: translateX(-50%) translateY(60px);
+      background: rgba(24, 2, 5, 0.92);
+      color: var(--gold-light);
       border: 1px solid var(--gold-primary);
-      padding: 8px 18px;
-      border-radius: 20px;
+      padding: 10px 22px;
+      border-radius: 24px;
       font-family: 'Montserrat', sans-serif;
-      font-size: 12px;
-      letter-spacing: 0.5px;
+      font-size: 11.5px;
+      font-weight: 500;
+      letter-spacing: 1px;
       z-index: 200;
       opacity: 0;
       pointer-events: none;
       transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
     }}
-
     .toast.show {{
-      opacity: 1;
       transform: translateX(-50%) translateY(0);
-    }}
-
-    .lightbox-modal {{
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(18, 2, 5, 0.94);
-      backdrop-filter: blur(8px);
-      z-index: 300;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }}
-
-    .lightbox-modal.open {{
-      display: flex;
-    }}
-
-    .lightbox-content {{
-      max-width: 90vw;
-      max-height: 85vh;
-      border: 3px solid var(--gold-primary);
-      border-radius: 12px;
-      box-shadow: 0 15px 50px rgba(0,0,0,0.8);
-      position: relative;
-    }}
-
-    .lightbox-content img {{
-      max-width: 100%;
-      max-height: 80vh;
-      display: block;
-      border-radius: 8px;
-    }}
-
-    .lightbox-close {{
-      position: absolute;
-      top: -16px;
-      right: -16px;
-      background: var(--gold-gradient);
-      border: 1px solid #AA7C11;
-      color: #2A040B;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      font-size: 16px;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    }}
-    /* =========================================================
-       STORY SEGMENTED PROGRESS HEADER BAR (Instagram / WhatsApp Model)
-       ========================================================= */
-    .story-header-bar {{
-      position: absolute;
-      top: 10px;
-      left: 12px;
-      right: 12px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      z-index: 80;
-      padding: 4px 6px;
-      border-radius: 8px;
-      background: rgba(24, 2, 5, 0.25);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-    }}
-
-    .story-dash {{
-      flex: 1;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.42);
-      border-radius: 3px;
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-      transition: transform 0.15s ease;
-    }}
-
-    .story-dash:hover {{
-      transform: scaleY(1.5);
-    }}
-
-    .story-dash-fill {{
-      width: 0%;
-      height: 100%;
-      border-radius: 3px;
-      background: linear-gradient(90deg, #D4AF37 0%, #F5DE98 60%, #FFF5D6 100%);
-      box-shadow: 0 0 6px rgba(212, 175, 55, 0.7);
-      transition: width 0.08s linear;
-    }}
-
-    .story-dash.completed .story-dash-fill {{
-      width: 100% !important;
-      transition: none !important;
-    }}
-
-    .story-dash.pending .story-dash-fill {{
-      width: 0% !important;
-      transition: none !important;
-    }}
-
-    /* =========================================================
-       STANDARDIZED MOBILE SCREEN VIEW (Full Screen Edge-to-Edge)
-       ========================================================= */
-    @media (max-width: 850px), (max-device-width: 850px), (hover: none) and (pointer: coarse) {{
-      html, body {{
-        width: 100vw;
-        height: 100vh;
-        height: 100dvh;
-        min-height: 100dvh;
-        padding: 0;
-        margin: 0;
-        overflow: hidden;
-        background: #480C17;
-      }}
-
-      .stage-wrapper {{
-        width: 100vw;
-        height: 100vh;
-        height: 100dvh;
-        max-width: 100vw;
-        max-height: 100dvh;
-        margin: 0;
-        padding: 0;
-        border-radius: 0;
-        box-shadow: none;
-      }}
-
-      .invitation-card {{
-        width: 100vw;
-        height: 100vh;
-        height: 100dvh;
-        max-width: 100vw;
-        max-height: 100dvh;
-        border-radius: 0;
-        border: 3px solid #5E1220;
-        outline: 1.5px solid #d4af37;
-        outline-offset: -3px;
-        box-shadow: none;
-        box-sizing: border-box;
-        padding: 28px 12px 10px 12px;
-      }}
-
-      .story-header-bar {{
-        top: 10px;
-        left: 10px;
-        right: 48px;
-        width: calc(100% - 58px);
-      }}
-
-      .corner-controls {{
-        top: 6px;
-        right: 8px;
-        z-index: 120;
-      }}
-
-      .icon-btn {{
-        width: 30px;
-        height: 30px;
-        font-size: 11px;
-      }}
-
-      /* Universal Mobile Bottom Navigation Bar (Guaranteed visible, never cut off) */
-      .card-nav-row {{
-        width: 100%;
-        padding-top: 4px;
-        padding-bottom: max(6px, env(safe-area-inset-bottom));
-        margin-top: auto;
-        flex-shrink: 0;
-        gap: 8px;
-      }}
-
-      .nav-link-btn {{
-        padding: 6px 14px;
-        font-size: 9px;
-        letter-spacing: 0.8px;
-      }}
-
-      .gold-btn {{
-        padding: 7px 16px;
-        font-size: 9px;
-        letter-spacing: 1px;
-      }}
-
-      /* =========================================================
-         SCENE 1: ENVELOPE & CORDIALLY INVITED MOBILE FIT
-         ========================================================= */
-      #scene-invited {{
-        padding: 26px 12px 10px 12px;
-      }}
-      .invited-title {{
-        font-size: 16px;
-        letter-spacing: 3px;
-      }}
-      .bismillah-text {{
-        font-size: 15px;
-      }}
-      .invited-desc {{
-        font-size: 11px;
-        line-height: 1.35;
-      }}
-
-      /* =========================================================
-         SCENE 2: WE'RE GETTING MARRIED (TWIN COUPLES) MOBILE FIT
-         ========================================================= */
-      #scene-couples {{
-        padding-top: 24px;
-        padding-bottom: 8px;
-      }}
-      .title-banner {{
-        font-size: 11px;
-        letter-spacing: 2.5px;
-        margin-top: 2px;
-        margin-bottom: 1px;
-      }}
-      .subtitle-banner {{
-        font-size: 12px;
-        margin-bottom: 4px;
-      }}
-      .twins-badge {{
-        font-size: 8.5px;
-        letter-spacing: 1px;
-        padding: 2px 10px;
-        margin-bottom: 6px;
-      }}
-      .couples-stack {{
-        gap: 5px;
-        margin: auto 0;
-        width: 100%;
-      }}
-      .couple-card {{
-        padding: 6px 8px;
-        border-radius: 8px;
-      }}
-      .couple-role {{
-        font-size: 8px;
-        letter-spacing: 1.5px;
-        margin-bottom: 1px;
-      }}
-      .bride-name {{
-        font-size: 24px;
-        line-height: 1.05;
-      }}
-      .ampersand {{
-        font-size: 13px;
-        margin: 0;
-      }}
-      .groom-name {{
-        font-size: 12px;
-        letter-spacing: 1.5px;
-        margin-top: 1px;
-      }}
-      .couple-sub {{
-        font-size: 10px;
-        margin-top: 1px;
-      }}
-
-      /* =========================================================
-         SCENE 3: PORTRAIT ARTWORK MOBILE FIT
-         ========================================================= */
-      #scene-portrait {{
-        padding: 26px 12px 10px 12px;
-      }}
-      .portrait-parchment-frame {{
-        max-height: calc(100dvh - 90px);
-      }}
-
-      /* =========================================================
-         SCENE 4: CEREMONY DETAILS (BALANCED & CENTERED)
-         ========================================================= */
-      #scene-details {{
-        padding: 24px 12px 10px 12px;
-      }}
-      #scene-details .scene-body-content {{
-        margin: auto 0;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }}
-      .card-top-header {{
-        font-size: 10px;
-        letter-spacing: 2px;
-        margin-bottom: 5px;
-        color: var(--burgundy-card);
-      }}
-      .parents-section {{
-        margin-bottom: 8px;
-        text-align: center;
-      }}
-      .parents-names {{
-        font-size: 14.5px;
-        font-weight: 700;
-        color: var(--burgundy-card);
-        font-family: 'Cinzel', serif;
-      }}
-      .residence-line {{
-        font-size: 10.5px;
-        color: var(--ink-muted);
-        margin-top: 2px;
-      }}
-      .invite-text {{
-        font-size: 12.5px;
-        margin: 6px auto 12px auto;
-        line-height: 1.4;
-        max-width: 320px;
-        text-align: center;
-      }}
-      .couples-detail-grid {{
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-        width: 100%;
-        margin: 4px 0 12px 0;
-      }}
-      .couple-detail-box {{
-        padding: 12px 6px;
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.85);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        border: 1.5px solid rgba(212, 175, 55, 0.45);
-        text-align: center;
-      }}
-      .c-union-tag {{
-        font-size: 7.5px;
-        letter-spacing: 1.5px;
-        margin-bottom: 2px;
-      }}
-      .c-bride {{
-        font-size: 22px;
-        line-height: 1.1;
-        color: var(--burgundy-card);
-      }}
-      .c-with {{
-        font-size: 10px;
-        font-style: italic;
-      }}
-      .c-groom {{
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 1px;
-        margin: 1px 0;
-      }}
-      .c-parentage {{
-        font-size: 9px;
-        line-height: 1.2;
-        color: var(--ink-muted);
-        margin-top: 2px;
-      }}
-      .quran-blessing {{
-        font-size: 11px;
-        line-height: 1.35;
-        margin: 8px auto 4px auto;
-        padding: 6px 12px;
-        text-align: center;
-        border-top: 1px solid rgba(212, 175, 55, 0.35);
-        border-bottom: 1px solid rgba(212, 175, 55, 0.35);
-        max-width: 320px;
-      }}
-
-      /* =========================================================
-         SCENE 5: SCHEDULE & COUNTDOWN (BALANCED & CENTERED)
-         ========================================================= */
-      #scene-schedule {{
-        padding: 24px 12px 10px 12px;
-      }}
-      #scene-schedule .scene-body-content {{
-        margin: auto 0;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }}
-      .insha-allah-header {{
-        font-size: 20px;
-        margin-bottom: 2px;
-        color: var(--gold-dark);
-      }}
-      .insha-allah-sub {{
-        font-size: 13px;
-        font-weight: 700;
-        letter-spacing: 2px;
-        margin-bottom: 12px;
-        color: var(--burgundy-card);
-      }}
-      .event-info-cards {{
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 6px;
-        width: 100%;
-        margin-bottom: 12px;
-      }}
-      .info-card {{
-        padding: 12px 4px;
-        border-radius: 10px;
-        background: #480C17;
-        color: #fff;
-        border: 1px solid rgba(212, 175, 55, 0.3);
-        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      }}
-      .info-card .icon {{
-        font-size: 16px;
-        margin-bottom: 2px;
-      }}
-      .info-card .label {{
-        font-size: 7.5px;
-        letter-spacing: 1px;
-        color: var(--gold-light);
-      }}
-      .info-card .main-val {{
-        font-size: 13px;
-        margin: 2px 0;
-        font-weight: 700;
-        color: #fff;
-      }}
-      .info-card .sub-val {{
-        font-size: 7.5px;
-        line-height: 1.15;
-        color: #E2D3D5;
-      }}
-      .countdown-wrap {{
-        width: 100%;
-        background: rgba(72, 12, 23, 0.05);
-        border: 1.5px solid rgba(212, 175, 55, 0.38);
-        border-radius: 12px;
-        padding: 10px 8px;
-        margin-bottom: 12px;
-        text-align: center;
-      }}
-      .countdown-label {{
-        font-size: 8.5px;
-        letter-spacing: 1.5px;
-        margin-bottom: 3px;
-        color: var(--gold-dark);
-        font-weight: 600;
-      }}
-      .timer-units {{
-        display: flex;
-        justify-content: center;
-        gap: 8px;
-      }}
-      .timer-unit .num {{
-        font-size: 17px;
-        font-weight: 700;
-        color: var(--burgundy-card);
-      }}
-      .timer-unit .unit {{
-        font-size: 8px;
-        color: var(--ink-muted);
-      }}
-      .compliments-note {{
-        font-size: 10.5px;
-        line-height: 1.35;
-        margin-top: 4px;
-        text-align: center;
-        color: var(--ink-muted);
-      }}
-
-      /* =========================================================
-         SCENE 6: VENUE & ROUTE MAP MOBILE FIT
-         ========================================================= */
-      #scene-map {{
-        padding: 26px 12px 8px 12px;
-      }}
-      .venue-title {{
-        font-size: 12px;
-        letter-spacing: 2px;
-      }}
-      .venue-sub {{
-        font-size: 10.5px;
-        margin-bottom: 4px;
-      }}
-      .gmap-frame-box {{
-        flex: 1;
-        min-height: 180px;
-        margin-bottom: 6px;
-      }}
+      opacity: 1;
     }}
   </style>
 </head>
@@ -1753,14 +1528,14 @@ html_content = f'''<!DOCTYPE html>
   <!-- Floating Particles Canvas -->
   <canvas id="particlesCanvas"></canvas>
 
-    <!-- Discreet Corner Controls (Default Active Music) -->
+  <!-- Discreet Corner Controls -->
   <div class="corner-controls">
     <button id="audioBtn" class="icon-btn music-active" title="Background Music: Bi Saraha by Abeer Nehme (Playing)">
-      <span id="audioIcon">\U0001f50a</span>
+      <span id="audioIcon">🔊</span>
     </button>
   </div>
 
-  <!-- Default Background Music: Bi Saraha (Abeer Nehme) -->
+  <!-- Background Music: Bi Saraha (Abeer Nehme) -->
   <audio id="bgMusic" autoplay loop preload="auto" playsinline webkit-playsinline>
     <source src="audio/bi_saraha.m4a" type="audio/mp4">
     <source src="audio/bi_saraha.mp3" type="audio/mpeg">
@@ -1772,35 +1547,42 @@ html_content = f'''<!DOCTYPE html>
   <!-- Main Presentation Stage -->
   <div class="stage-wrapper">
 
-    <!-- Story Segmented Header Bar (Instagram / WhatsApp Model) -->
+    <!-- Story Segmented Header Bar -->
     <div class="story-header-bar" id="storyHeaderBar">
-      <div class="story-dash" onclick="restartPresentation()" title="1. Cordially Invited"><div class="story-dash-fill"></div></div>
+      <div class="story-dash" onclick="restartPresentation(event)" title="1. Cordially Invited"><div class="story-dash-fill"></div></div>
       <div class="story-dash" onclick="userGoToStep(2)" title="2. We're Getting Married"><div class="story-dash-fill"></div></div>
-      <div class="story-dash" onclick="userGoToStep(3)" title="3. Twin Couples Artwork"><div class="story-dash-fill"></div></div>
+      <div class="story-dash" onclick="userGoToStep(3)" title="3. Wedding Portrait"><div class="story-dash-fill"></div></div>
       <div class="story-dash" onclick="userGoToStep(4)" title="4. Ceremony Details"><div class="story-dash-fill"></div></div>
       <div class="story-dash" onclick="userGoToStep(5)" title="5. Event Schedule"><div class="story-dash-fill"></div></div>
       <div class="story-dash" onclick="userGoToStep(6)" title="6. Venue & Route Map"><div class="story-dash-fill"></div></div>
     </div>
 
     <!-- =========================================================
-         SCENE 1: ROYAL ENVELOPE OPENING SLOWLY DIRECTLY INTO "YOU'RE CORDIALLY INVITED"
-         (Zero Blank Card: Envelope flaps unfold slowly over the invitation)
+         SCENE 1: ROYAL ENVELOPE OPENING & YOU'RE CORDIALLY INVITED
          ========================================================= -->
-    <div id="scene-invited" class="invitation-card active">
-
-      <!-- The 4 Flaps Unfolding Outward in 3D directly over the card -->
+    <div id="scene-invited" class="invitation-card active"><!-- The 4 Flaps Unfolding Outward in 3D directly over the card -->
       <div class="envelope-flaps-overlay" id="envelopeBox" title="Click to Open Invitation">
         <div class="flap flap-top"></div>
         <div class="flap flap-bottom"></div>
         <div class="flap flap-left"></div>
         <div class="flap flap-right"></div>
+        <div class="leaf-glow-layer" id="leafGlow"></div>
         <div class="wax-seal" id="waxSeal" title="Click to Open Invitation"></div>
       </div>
-      <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-      
+
+      <!-- 3D Realistic Flying Butterfly (Emerges from center and perches at top) -->
+      <div class="flying-butterfly-container" id="flyingButterfly">
+        <div class="butterfly-shadow"></div>
+        <div class="butterfly-3d">
+          <div class="wing wing-left"></div>
+          <div class="butterfly-body"></div>
+          <div class="wing wing-right"></div>
+        </div>
+      </div>
+
       <div class="reveal-container">
         <div class="fade-youre">YOU'RE</div>
-        <div class="fade-cordially">C<span class="dot-o">O</span>RDIALLY</div>
+        <div class="fade-cordially">CORDIALLY</div>
         <div class="fade-invited">INVITED</div>
         
         <div class="gold-divider">
@@ -1813,161 +1595,106 @@ html_content = f'''<!DOCTYPE html>
       </div>
 
       <div class="card-nav-row">
-        <button class="nav-link-btn" onclick="restartPresentation()">‹ Replay</button>
+        <button class="nav-link-btn" onclick="restartPresentation(event)">‹ Replay</button>
         <button class="gold-btn" onclick="userGoToStep(2)">Announcement ➔</button>
       </div>
     </div>
 
     <!-- =========================================================
-         SCENE 3: WE'RE GETTING MARRIED (TWIN BRIDES & GROOMS)
+         SCENE 2: WE'RE GETTING MARRIED (AFSAL & NAJILA ASHRAF)
          ========================================================= -->
-    <div id="scene-couples" class="invitation-card">
-      <div class="title-banner">WE'RE GETTING MARRIED</div>
-      <div class="subtitle-banner">Two Sisters • Two Love Stories • One Auspicious Day</div>
-      <div class="twins-badge">✨ Twin Wedding Celebration ✨</div>
+    <div id="scene-couples" class="invitation-card"><!-- Perched Butterfly at top -->
+      <div class="perched-butterfly-couples">
+        <img class="perched-butterfly-img" src="{butterfly_full_b64}" alt="Golden Perched Butterfly" />
+      </div>
 
-      <div class="couples-stack">
-        <!-- Couple 1 -->
-        <div class="couple-card">
-          <div class="couple-role">The First Union</div>
-          <div class="write-wrap bride-write-1">
-            <span class="bride-name write-text">Salmabee</span>
-            <span class="pen-nib"></span>
-          </div>
-          <div class="ampersand ampersand-1">&</div>
-          <div class="write-wrap groom-write-1">
-            <span class="groom-name write-text">MUHAMMED AJNAS</span>
-            <span class="pen-nib"></span>
-          </div>
-          <div class="couple-sub sub-1">(Daughter of Abdul Rahman & Zeenath Rahman)</div>
-        </div>
+      <div class="married-model-container">
+        <div class="married-banner-title">WE'RE GETTING MARRIED</div>
 
-        <div class="gold-divider" style="margin: 2px 0;">
-          <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-        </div>
+        <div class="couple-calligraphy-wrap">
+          <!-- Groom Name (Afsal) First, letter-by-letter reveal -->
+          <div class="groom-calligraphy" id="groomName">
+            <span class="char-span">A</span><span class="char-span">f</span><span class="char-span">s</span><span class="char-span">a</span><span class="char-span">l</span>
+          </div>
 
-        <!-- Couple 2 -->
-        <div class="couple-card">
-          <div class="couple-role">The Second Union</div>
-          <div class="write-wrap bride-write-2">
-            <span class="bride-name write-text">Rahmabee</span>
-            <span class="pen-nib"></span>
+          <!-- Ampersand & appears gracefully in center -->
+          <div class="calligraphy-ampersand">&</div>
+
+          <!-- Bride Name (Najila Ashraf) Second, letter-by-letter reveal -->
+          <div class="bride-calligraphy" id="brideName">
+            <span class="char-span">N</span><span class="char-span">a</span><span class="char-span">j</span><span class="char-span">i</span><span class="char-span">l</span><span class="char-span">a</span><span class="char-space">&nbsp;</span><span class="char-span">A</span><span class="char-span">s</span><span class="char-span">h</span><span class="char-span">r</span><span class="char-span">a</span><span class="char-span">f</span>
           </div>
-          <div class="ampersand ampersand-2">&</div>
-          <div class="write-wrap groom-write-2">
-            <span class="groom-name write-text">SHAHBAZ MUHAMMED</span>
-            <span class="pen-nib"></span>
-          </div>
-          <div class="couple-sub sub-2">(Daughter of Abdul Rahman & Zeenath Rahman)</div>
         </div>
       </div>
 
-      <div class="card-nav-row">
+      <div class="card-nav-row" style="margin-top: auto;">
         <button class="nav-link-btn" onclick="userGoToStep(1)">‹ Back</button>
-        <button class="gold-btn" onclick="userGoToStep(3)">View Portrait ➔</button>
+        <button class="gold-btn" onclick="userGoToStep(3)">Wedding Portrait ➔</button>
       </div>
     </div>
 
     <!-- =========================================================
-         SCENE 4: STANDARDIZED FULL-IMAGE COUPLES PORTRAIT
+         SCENE 3: DANCING COUPLE PORTRAIT ARTWORK
          ========================================================= -->
     <div id="scene-portrait" class="invitation-card">
-        <div class="full-artwork-container">
-          <!-- Pristine Background: Floral Crest & Golden Names & Canvas -->
-          <img class="couples-bg-layer" src="{couples_bg_b64}" alt="Twin Wedding Floral Crest and Golden Calligraphy" />
+      <div class="scene3-artwork-container" onclick="triggerGracefulSpin(event)" title="Tap to spin the bride">
+        <!-- 4-Frame Graceful Spin Animation Layer -->
+        <img class="spin-frame spin-f1 active-frame" id="spinFrame1" src="{spin_f1_b64}" alt="Bride Graceful Pose 1 - Front View" />
+        <img class="spin-frame spin-f2" id="spinFrame2" src="{spin_f2_b64}" alt="Bride Graceful Pose 2 - Spinning Back View" />
+        <img class="spin-frame spin-f3" id="spinFrame3" src="{spin_f3_b64}" alt="Bride Graceful Pose 3 - Profile View Facing Groom" />
+        <img class="spin-frame spin-f4" id="spinFrame4" src="{spin_f4_b64}" alt="Bride Graceful Pose 4 - Turning Front View" />
 
-          <!-- Left Bride & Groom (Salmabee & Muhammed Ajnas) moves from left side to exact place -->
-          <img class="couple-left-layer" src="{couple_left_b64}" alt="Salmabee & Muhammed Ajnas" />
+        <!-- Interactive Spin Option Button -->
+        <button class="spin-action-pill" id="spinTriggerBtn" onclick="triggerGracefulSpin(event)" title="Gracefully spin the bride in a circle">
+          <span>✨ Spin Bride ↺</span>
+        </button>
 
-          <!-- Right Bride & Groom (Rahmabee & Shahbaz Muhammed) moves from right side to exact place -->
-          <img class="couple-right-layer" src="{couple_right_b64}" alt="Rahmabee & Shahbaz Muhammed" />
-
-          <!-- Translucent Bottom Navigation Overlay -->
-          <div class="portrait-nav-overlay">
+        <!-- Navigation Overlay -->
+        <div class="scene3-nav-overlay">
           <button class="nav-link-btn" onclick="userGoToStep(2)">‹ Back</button>
           <button class="gold-btn" onclick="userGoToStep(4)">Ceremony Details ➔</button>
         </div>
       </div>
     </div>
 
-    <!-- =========================================================
-         SCENE 4: CEREMONY DETAILS: TWIN UNIONS
-         (Host Parents & Twin Marriages)
-         ========================================================= -->
-    <div id="scene-details" class="invitation-card">
-      <div class="scene-body-content">
-        <div class="card-top-header">WITH GRATEFUL HEART & GREAT HAPPINESS</div>
+    <div id="scene-details" class="invitation-card"><div class="scene4-artwork-container">
+        <!-- Reception Details Artwork Card (Matching User Reference Image) -->
+        <img class="scene4-card-img" src="{scene4_card_b64}" alt="Ceremony Reception Details - Razak Hajee Kattil (V K) & Zainaba Razak" />
 
-        <div class="parents-section">
-          <div class="parents-names">Mr. Abdul Rahman & Mrs. Zeenath Rahman</div>
-          <div class="residence-line">Puthukkudy, P.O. Vakayad, Naduvannur • Ph: 7034490662</div>
+        <!-- Bottom Navigation Overlay -->
+        <div class="scene4-nav-overlay">
+          <button class="nav-link-btn" onclick="userGoToStep(3)">‹ Back</button>
+          <button class="gold-btn" onclick="userGoToStep(5)">Event Schedule ➔</button>
         </div>
-
-        <p class="invite-text">
-          We cordially invite you with family to share the happiness of the Wedding ceremony of our children:
-        </p>
-
-        <div class="couples-detail-grid">
-          <div class="couple-detail-box">
-            <div class="c-union-tag">THE FIRST UNION</div>
-            <div class="c-bride">Salmabee</div>
-            <div class="c-with">with</div>
-            <div class="c-groom">MUHAMMED AJNAS</div>
-            <div class="c-parentage">S/o. Abdul Rahiman & Fousiya<br>Mundakutty, Pathirikkara</div>
-          </div>
-
-          <div class="couple-detail-box">
-            <div class="c-union-tag">THE SECOND UNION</div>
-            <div class="c-bride">Rahmabee</div>
-            <div class="c-with">with</div>
-            <div class="c-groom">SHAHBAZ MUHAMMED</div>
-            <div class="c-parentage">S/o. Muhammed & Shabana<br>Kunnathkandi, Kadiyangad</div>
-          </div>
-        </div>
-
-        <div class="quran-blessing">
-          “And He placed between you affection and mercy.”
-          <div style="font-size: 11px; font-style: normal; letter-spacing: 1px; color: var(--burgundy-card); margin-top: 3px;">— SURAH AR-RUM 30:21 —</div>
-        </div>
-      </div>
-
-      <div class="card-nav-row" style="margin-top: auto;">
-        <button class="nav-link-btn" onclick="userGoToStep(3)">‹ Back</button>
-        <button class="gold-btn" onclick="userGoToStep(5)">Event Schedule ➔</button>
       </div>
     </div>
 
     <!-- =========================================================
-         SCENE 5: CEREMONY SCHEDULE & AUSPICIOUS DAY
-         (Date, Residence, Time, Live Countdown & Calendar)
+         SCENE 5: CEREMONY SCHEDULE & AUSPICIOUS DAY (FLORAL WATERCOLOR MODEL)
          ========================================================= -->
     <div id="scene-schedule" class="invitation-card">
-      <div class="scene-body-content">
+      <div class="scene5-body-content">
+        <!-- Bismillah & Insha Allah -->
         <div class="insha-allah-header">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-        <div class="insha-allah-sub">In Sha Allah</div>
+        <div class="insha-allah-sub">INSHA ALLAH</div>
 
-        <!-- 3 Key Event Highlights Matching Physical Invitation -->
-        <div class="event-info-cards">
-          <div class="info-card">
-            <div class="icon">📅</div>
-            <div class="label">SATURDAY</div>
-            <div class="main-val">07</div>
-            <div class="sub-val">NOVEMBER<br>2026</div>
-          </div>
+        <!-- Main Wedding Reception Card (Image 2 Authentic Model) -->
+        <div class="schedule-main-card">
+          <div class="schedule-event-badge">WEDDING RECEPTION</div>
+          <div class="schedule-date-title">Sunday, January 3, 2027</div>
+          <div class="schedule-time-title">12:00 PM Onwards</div>
+          <div class="schedule-gold-rule"></div>
+          <div class="schedule-venue-name">Zaithoon Villa <span class="venue-sub-tag">(Groom's Residence)</span></div>
+          <div class="schedule-venue-city">Payyoli, Kozhikode</div>
+        </div>
 
-          <div class="info-card">
-            <div class="icon">📍</div>
-            <div class="label">VENUE</div>
-            <div class="main-val" style="font-size: 10px; line-height: 1.2;">AT OUR<br>RESIDENCE</div>
-            <div class="sub-val">Vakayad<br>Naduvannur</div>
-          </div>
-
-          <div class="info-card">
-            <div class="icon">⏰</div>
-            <div class="label">TIME</div>
-            <div class="main-val" style="font-size: 11px; line-height: 1.2;">BETWEEN<br>5 - 9 PM</div>
-            <div class="sub-val">EVENING<br>CEREMONY</div>
-          </div>
+        <!-- Nikah Ceremony Card (Image 2 Authentic Model) -->
+        <div class="schedule-nikah-card">
+          <div class="nikah-tag">🕌 NIKAH CEREMONY</div>
+          <p class="nikah-text">
+            Will take place at <strong>Paloor Moihidheen Juma Masjid</strong> (Thikkodi)<br>
+            <span class="nikah-datetime">on <strong>31-12-2026</strong> at <strong>11:00 AM</strong></span>
+          </p>
         </div>
 
         <!-- Live Countdown -->
@@ -1981,71 +1708,71 @@ html_content = f'''<!DOCTYPE html>
           </div>
         </div>
 
+        <!-- Authentic Compliments (Image 2 Authentic Model) -->
         <div class="compliments-note">
-          With best compliments from:<br>
-          <strong>Shajeem, Anzeela Shajeem, Rizwan, Haizam & Ayana</strong>
+          With Best Compliments From:<br>
+          <strong>Afeef, Ramshina Afeef, Irshad, Irfan,<br>Fathima Hiba, Family & Friends</strong>
         </div>
       </div>
 
-      <div class="card-nav-row" style="margin-top: auto;">
+      <div class="card-nav-row" style="margin-top: auto; z-index: 20;">
         <button class="nav-link-btn" onclick="userGoToStep(4)">‹ Back</button>
         <button class="gold-btn" onclick="userGoToStep(6)">Route Map ➔</button>
       </div>
     </div>
 
-    <!-- =========================================================
-       SCENE 6: VENUE, ADDRESS & ACCURATE GOOGLE MAP DIRECTIONS
-       (Wish on WhatsApp & Call Host buttons REMOVED)
-       ========================================================= -->
     <div id="scene-map" class="invitation-card">
-      <div class="venue-title">VENUE & ROUTE MAP</div>
-      <div class="venue-sub">We look forward to welcoming you with warmth and joy</div>
+      <div class="scene6-body-content">
+        <div class="venue-title">VENUE & ROUTE MAP</div>
+        <div class="venue-sub">Select a ceremony below for directions and location map</div>
 
-      <div class="address-card">
-        <div class="residence-name">Abdul Rahman Residence (Puthukkudy)</div>
-        <div class="full-address">
-          Puthukkudy, P.O. Vakayad, Naduvannur<br>
-          Kozhikode District, Kerala, India - 673614
+        <!-- Venue Selection Tabs (Reception vs Nikah) -->
+        <div class="venue-tab-switcher">
+          <button class="venue-tab-btn active" id="tabReceptionBtn" onclick="selectVenueTab('reception')">
+            🏡 Reception (Payyoli)
+          </button>
+          <button class="venue-tab-btn" id="tabNikahBtn" onclick="selectVenueTab('nikah')">
+            🕌 Nikah (Thikkodi)
+          </button>
         </div>
-        <div class="phone-contact">
-          📞 Ph: +91 7034490662
+
+        <!-- Dynamic Venue Info Card -->
+        <div class="address-card">
+          <div class="venue-event-badge" id="venueEventBadge">WEDDING RECEPTION • SUN, JAN 3, 2027 • 12:00 PM</div>
+          <div class="residence-name" id="venueName">Zaithoon Villa (Groom's Residence)</div>
+          <div class="full-address" id="venueAddress">
+            Payyoli, Kozhikode District, Kerala, India
+          </div>
         </div>
-      </div>
 
-      <!-- Accurate Direct Google Maps Direction Embed -->
-      <div class="gmap-frame-box">
-        <iframe 
-          title="Google Maps Direction to Abdul Rahman Residence, Vakayad, Naduvannur"
-          src="https://maps.google.com/maps?q=Vakayad,+Naduvannur,+Kozhikode,+Kerala&t=&z=14&ie=UTF8&iwloc=&output=embed"
-          allowfullscreen="" 
-          loading="lazy">
-        </iframe>
-      </div>
+        <!-- Reduced & Standardized Google Maps Embed -->
+        <div class="gmap-frame-box">
+          <iframe 
+            id="gmapIframe"
+            title="Google Maps Direction to Wedding Ceremony Venue"
+            src="https://maps.google.com/maps?q=Zaithoon+Villa,+Payyoli,+Kozhikode,+Kerala&t=&z=14&ie=UTF8&iwloc=&output=embed"
+            allowfullscreen="" 
+            loading="lazy">
+          </iframe>
+        </div>
 
-      <!-- Focused Directions Buttons -->
-      <div class="directions-btn-grid">
-        <a class="dir-action-btn primary-directions" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=Vakayad,+Naduvannur,+Kerala">
-          🗺️ Get Directions
-        </a>
-        <button class="dir-action-btn" onclick="copyAddress()">
-          📋 Copy Address
-        </button>
-      </div>
+        <!-- Standardized Directions Buttons -->
+        <div class="directions-btn-grid">
+          <a class="dir-action-btn primary-directions" id="getDirectionsLink" target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=Zaithoon+Villa,+Payyoli,+Kozhikode,+Kerala">
+            🗺️ Get Directions
+          </a>
+          <button class="dir-action-btn" onclick="copyVenueAddress()">
+            📋 Copy Address
+          </button>
+        </div>
 
-      <div class="card-nav-row">
-        <button class="nav-link-btn" onclick="userGoToStep(5)">‹ Back</button>
-        <button class="gold-btn" onclick="restartPresentation()">✉️ Replay from Beginning</button>
+        <div class="scene6-nav-row">
+          <button class="nav-link-btn" onclick="userGoToStep(5)">‹ Back</button>
+          <button class="gold-btn" onclick="restartPresentation(event)">✉️ Replay from Beginning</button>
+        </div>
       </div>
     </div>
 
-  </div>
-
-  <!-- Lightbox Modal -->
-  <div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox()">
-    <div class="lightbox-content" onclick="event.stopPropagation()">
-      <div class="lightbox-close" onclick="closeLightbox()">✕</div>
-      <img src="{couples_b64}" alt="Twin Brides & Grooms - Salmabee & Muhammed Ajnas and Rahmabee & Shahbaz Muhammed" />
-    </div>
   </div>
 
   <!-- Interactive Scripts -->
@@ -2066,10 +1793,10 @@ html_content = f'''<!DOCTYPE html>
 
     /* Standard, peaceful pacing for each scene */
     const stepDurations = {{
-      1: 13000, // 2.2s pause + 5.8s slow 3D unfold + 5.0s reading "You're Cordially Invited"
-      2: 12500, // We're Getting Married (slow calligraphy writing animation)
+      1: 13000, // Envelope unfold + butterfly flight + reading "You're Cordially Invited"
+      2: 7000,  // We're Getting Married (letter-by-letter flowing ink reveal)
       3: 8500,  // Full Artwork Card
-      4: 8500,  // Ceremony Details (Twin Unions)
+      4: 8500,  // Ceremony Reception Details
       5: 9000   // Ceremony Schedule & Live Countdown
     }};
 
@@ -2137,19 +1864,9 @@ html_content = f'''<!DOCTYPE html>
       }});
 
       window.scrollTo({{ top: 0, behavior: 'smooth' }});
-
       updateStoryProgress(step);
-    }}
-
-    function scheduleNextStep() {{
-      if (autoPlayTimer) clearTimeout(autoPlayTimer);
-      if (!autoPlayEnabled) return;
-
-      const duration = stepDurations[currentStep];
-      if (duration && currentStep < 6) {{
-        autoPlayTimer = setTimeout(() => {{
-          goToStep(currentStep + 1);
-        }}, duration);
+      if (step === 3) {{
+        showSpinFrame(1);
       }}
     }}
 
@@ -2165,94 +1882,188 @@ html_content = f'''<!DOCTYPE html>
       if (currentStep > 1) goToStep(currentStep - 1);
     }}
 
-    const autoPlayBtn = document.getElementById('autoPlayBtn');
-    const autoPlayIcon = document.getElementById('autoPlayIcon');
-
-    if (autoPlayBtn) {{
-      autoPlayBtn.addEventListener('click', () => {{
-        autoPlayEnabled = !autoPlayEnabled;
-        if (autoPlayEnabled) {{
-          if (autoPlayIcon) autoPlayIcon.innerText = '\u23f8';
-          const activeDash = document.querySelector('.story-dash.active');
-          if (activeDash) {{
-            const fill = activeDash.querySelector('.story-dash-fill');
-            startDashAnimation(activeDash, fill, currentStep);
-          }}
-          showToast('Auto-play enabled');
-        }} else {{
-          if (autoPlayIcon) autoPlayIcon.innerText = '\u25b6';
-          if (storyProgressRaf) cancelAnimationFrame(storyProgressRaf);
-          storyPausedElapsed = performance.now() - storyStartTime;
-          showToast('Auto-play paused');
-        }}
-      }});
-    }}
-
     // ==========================================
-    // MAJESTIC SLOW 4-SIDE FLAP OPENING (3.8s)
+    // MAJESTIC SLOW 4-SIDE FLAP OPENING & BUTTERFLY FLIGHT
     // ==========================================
     const envelopeBox = document.getElementById('envelopeBox');
     const waxSeal = document.getElementById('waxSeal');
+    const flyingButterfly = document.getElementById('flyingButterfly');
 
-    let envelopeTimeout = null;
+    
+    let currentSpinFrame = 1;
+    let spinTimer = null;
+    let isBrideSpinning = false;
+
+    function showSpinFrame(frameNum) {{
+      for (let i = 1; i <= 4; i++) {{
+        const frameEl = document.getElementById('spinFrame' + i);
+        if (frameEl) {{
+          if (i === frameNum) {{
+            frameEl.classList.add('active-frame');
+          }} else {{
+            frameEl.classList.remove('active-frame');
+          }}
+        }}
+      }}
+      currentSpinFrame = frameNum;
+    }}
+
+    function triggerGracefulSpin(e, numRotations = 2) {{
+      if (e) e.stopPropagation();
+      if (isBrideSpinning) return;
+      isBrideSpinning = true;
+
+      const btn = document.getElementById('spinTriggerBtn');
+      if (btn) btn.classList.add('spinning');
+
+      let currentStepIdx = 0;
+      const totalSteps = numRotations * 4;
+      let frame = 1;
+
+      if (spinTimer) clearInterval(spinTimer);
+
+      spinTimer = setInterval(() => {{
+        currentStepIdx++;
+        frame = (frame % 4) + 1;
+        showSpinFrame(frame);
+
+        if (currentStepIdx >= totalSteps) {{
+          clearInterval(spinTimer);
+          spinTimer = null;
+          // Smoothly settle back on Frame 1
+          setTimeout(() => {{
+            showSpinFrame(1);
+            isBrideSpinning = false;
+            if (btn) btn.classList.remove('spinning');
+          }}, 500);
+        }}
+      }}, 500);
+    }}
+
+    function triggerCoupleTwirl(e) {{
+      triggerGracefulSpin(e, 2);
+    }}
+
     function openInvitation() {{
       if (envelopeOpened) return;
       envelopeOpened = true;
 
       playBackgroundSong();
 
-      envelopeBox.classList.add('opened');
-      // The 4 flaps unfold slowly in 3D over 3.8s directly revealing "YOU'RE CORDIALLY INVITED" underneath!
+      if (envelopeBox) {{
+        envelopeBox.classList.add('lighting-active');
+        setTimeout(() => {{
+          envelopeBox.classList.add('opened');
+        }}, 650);
+      }}
+
+      if (flyingButterfly) {{
+        flyingButterfly.classList.remove('landed');
+        flyingButterfly.classList.add('fly-active');
+        setTimeout(() => {{
+          flyingButterfly.classList.remove('fly-active');
+          flyingButterfly.classList.add('landed');
+        }}, 5600);
+      }}
     }}
+if (waxSeal) waxSeal.addEventListener('click', openInvitation);
+    if (envelopeBox) envelopeBox.addEventListener('click', openInvitation);
 
-    waxSeal.addEventListener('click', openInvitation);
-    envelopeBox.addEventListener('click', openInvitation);
-
-    function restartPresentation() {{
+    function restartPresentation(e) {{
+      if (e) {{
+        try {{ e.stopPropagation(); }} catch (err) {{}}
+      }}
       if (storyProgressRaf) cancelAnimationFrame(storyProgressRaf);
       if (autoPlayTimer) clearTimeout(autoPlayTimer);
       autoPlayEnabled = true;
 
-      // Reset flaps and wax seal instantly without transition delay
+      // Clean URL params (?step=6) so refreshing stays at beginning
+      try {{
+        if (window.history && window.history.replaceState) {{
+          window.history.replaceState({{}}, document.title, window.location.pathname);
+        }}
+      }} catch (err) {{}}
+
+      // Grab elements cleanly inside function scope
+      const envBox = document.getElementById('envelopeBox');
+      const sealEl = document.getElementById('waxSeal');
+      const butterflyEl = document.getElementById('flyingButterfly');
+      const musicEl = document.getElementById('bgMusic');
       const flaps = document.querySelectorAll('.flap');
-      flaps.forEach(f => f.style.transition = 'none');
-      if (waxSeal) waxSeal.style.transition = 'none';
+
+      // Instant reset of flaps
+      flaps.forEach(f => {{
+        f.style.transition = 'none';
+        f.style.transform = '';
+        f.style.opacity = '1';
+      }});
+
+      // Instant reset of wax seal
+      if (sealEl) {{
+        sealEl.style.transition = 'none';
+        sealEl.style.opacity = '1';
+        sealEl.style.transform = 'translate(-50%, -50%)';
+        sealEl.style.visibility = 'visible';
+        sealEl.style.pointerEvents = 'auto';
+      }}
+
+      // Instant reset of envelope overlay container
+      if (envBox) {{
+        envBox.style.transition = 'none';
+        envBox.style.opacity = '1';
+        envBox.style.visibility = 'visible';
+        envBox.style.pointerEvents = 'auto';
+        envBox.classList.remove('opened');
+        envBox.classList.remove('lighting-active');
+      }}
+
+      // Instant reset of butterfly
+      if (butterflyEl) {{
+        butterflyEl.classList.remove('fly-active');
+        butterflyEl.classList.remove('landed');
+        butterflyEl.style.opacity = '0';
+        butterflyEl.style.animation = 'none';
+      }}
 
       envelopeOpened = false;
-      envelopeBox.classList.remove('opened');
 
-      // Force DOM reflow to apply closed state instantly
-      void envelopeBox.offsetHeight;
+      // Force layout reflow
+      if (envBox) void envBox.offsetHeight;
 
-      // Restore smooth 3D unfolding transitions
+      // Re-enable smooth CSS transitions
       flaps.forEach(f => f.style.transition = '');
-      if (waxSeal) waxSeal.style.transition = '';
+      if (sealEl) sealEl.style.transition = '';
+      if (envBox) envBox.style.transition = '';
+      if (butterflyEl) butterflyEl.style.animation = '';
 
-      // Navigate to Step 1 ("YOU'RE CORDIALLY INVITED" with closed envelope on top)
+      // Reset music position if playing
+      if (musicEl) {{
+        try {{ musicEl.currentTime = 0; }} catch (err) {{}}
+      }}
+
+      // Seamlessly navigate to step 1 (The closed envelope page)
       goToStep(1);
+      window.scrollTo({{ top: 0, behavior: 'smooth' }});
 
-      // Begin slow majestic 3D unfold after 1.8s peaceful pause
+      // Peaceful preview before gentle auto-open if user doesn't click
       setTimeout(() => {{
         if (!envelopeOpened && currentStep === 1) {{
           openInvitation();
         }}
-      }}, 2200);
+      }}, 4500);
     }}
-
-    // Direct opening flow on page load
     window.addEventListener('DOMContentLoaded', () => {{
       const urlParams = new URLSearchParams(window.location.search);
       const stepParam = parseInt(urlParams.get('step'));
       const openedParam = urlParams.get('opened');
-      if (openedParam === '1') {{
+
+      if (openedParam === '1' || (stepParam && stepParam > 1)) {{
         envelopeOpened = true;
-        envelopeBox.classList.add('opened');
+        if (envelopeBox) envelopeBox.classList.add('opened');
+        if (flyingButterfly) flyingButterfly.classList.add('landed');
       }}
+
       if (stepParam && stepParam >= 1 && stepParam <= 6) {{
-        if (stepParam > 1) {{
-          envelopeOpened = true;
-          envelopeBox.classList.add('opened');
-        }}
         goToStep(stepParam);
       }} else {{
         updateStoryProgress(1);
@@ -2260,11 +2071,10 @@ html_content = f'''<!DOCTYPE html>
           if (!envelopeOpened) {{
             openInvitation();
           }}
-        }}, 2200);
+        }}, 2800);
       }}
     }});
-
-    // ==========================================
+// ==========================================
     // FLOATING PARTICLES CANVAS
     // ==========================================
     const pCanvas = document.getElementById('particlesCanvas');
@@ -2302,24 +2112,14 @@ html_content = f'''<!DOCTYPE html>
         }}
       }}
       draw() {{
+        // Clean off-white background: No falling petals or leaves
         pCtx.save();
         pCtx.translate(this.x, this.y);
-        pCtx.rotate((this.rotation * Math.PI) / 180);
-        pCtx.globalAlpha = this.opacity;
-
-        if (this.isPetal) {{
-          pCtx.fillStyle = '#C2185B';
-          pCtx.beginPath();
-          pCtx.ellipse(0, 0, this.size * 1.4, this.size, 0, 0, Math.PI * 2);
-          pCtx.fill();
-        }} else {{
-          pCtx.fillStyle = '#FFD700';
-          pCtx.shadowColor = '#FFD700';
-          pCtx.shadowBlur = 5;
-          pCtx.beginPath();
-          pCtx.arc(0, 0, this.size * 0.5, 0, Math.PI * 2);
-          pCtx.fill();
-        }}
+        pCtx.globalAlpha = this.opacity * 0.4;
+        pCtx.fillStyle = '#D4AF37';
+        pCtx.beginPath();
+        pCtx.arc(0, 0, this.size * 0.35, 0, Math.PI * 2);
+        pCtx.fill();
         pCtx.restore();
       }}
     }}
@@ -2341,13 +2141,12 @@ html_content = f'''<!DOCTYPE html>
     animateParticles();
 
     // ==========================================
-    // ==// ==========================================
     // DEFAULT BACKGROUND MUSIC SYSTEM: "BI SARAHA" (بصراحة)
     // ==========================================
     const bgMusic = document.getElementById('bgMusic');
     const audioBtn = document.getElementById('audioBtn');
     const audioIcon = document.getElementById('audioIcon');
-    let isMusicPlaying = true; // Enabled and playing by default
+    let isMusicPlaying = true;
 
     function playBackgroundSong() {{
       if (!bgMusic) return;
@@ -2356,7 +2155,7 @@ html_content = f'''<!DOCTYPE html>
       if (playPromise !== undefined) {{
         playPromise.then(() => {{
           isMusicPlaying = true;
-          if (audioIcon) audioIcon.innerText = '\U0001f50a';
+          if (audioIcon) audioIcon.innerText = '🔊';
           if (audioBtn) audioBtn.classList.add('music-active');
         }}).catch((err) => {{
           console.log('Autoplay waiting for first touch/interaction:', err);
@@ -2364,16 +2163,14 @@ html_content = f'''<!DOCTYPE html>
       }}
     }}
 
-    // 1. Immediately attempt default playback on load
     playBackgroundSong();
 
-    // 2. Immediate gesture listener to guarantee default play on first screen touch/tap
     const unlockDefaultAudio = () => {{
       if (bgMusic) {{
         bgMusic.volume = 0.70;
         bgMusic.play().then(() => {{
           isMusicPlaying = true;
-          if (audioIcon) audioIcon.innerText = '\U0001f50a';
+          if (audioIcon) audioIcon.innerText = '🔊';
           if (audioBtn) audioBtn.classList.add('music-active');
         }}).catch(() => {{}});
       }}
@@ -2389,13 +2186,13 @@ html_content = f'''<!DOCTYPE html>
       if (isMusicPlaying) {{
         bgMusic.pause();
         isMusicPlaying = false;
-        if (audioIcon) audioIcon.innerText = '\U0001f507';
+        if (audioIcon) audioIcon.innerText = '🔇';
         if (audioBtn) audioBtn.classList.remove('music-active');
       }} else {{
         bgMusic.volume = 0.70;
         bgMusic.play().then(() => {{
           isMusicPlaying = true;
-          if (audioIcon) audioIcon.innerText = '\U0001f50a';
+          if (audioIcon) audioIcon.innerText = '🔊';
           if (audioBtn) audioBtn.classList.add('music-active');
         }}).catch((e) => console.warn('Audio play error:', e));
       }}
@@ -2411,7 +2208,7 @@ html_content = f'''<!DOCTYPE html>
     // ==========================================
     // LIVE WEDDING COUNTDOWN TIMER
     // ==========================================
-    const weddingDate = new Date('2026-11-07T17:00:00+05:30').getTime();
+    const weddingDate = new Date('2027-01-03T12:00:00+05:30').getTime();
 
     function updateCountdown() {{
       const now = new Date().getTime();
@@ -2446,12 +2243,78 @@ html_content = f'''<!DOCTYPE html>
       }}, 2600);
     }}
 
+    const venueDataMap = {{
+      reception: {{
+        badge: "WEDDING RECEPTION • SUN, JAN 3, 2027 • 12:00 PM",
+        name: "Zaithoon Villa (Groom's Residence)",
+        address: "Payyoli, Kozhikode District, Kerala, India",
+        fullCopy: "Zaithoon Villa (Groom's Residence), Payyoli, Kozhikode District, Kerala, India",
+        mapSrc: "https://maps.google.com/maps?q=Payyoli,+Kozhikode,+Kerala&t=&z=14&ie=UTF8&iwloc=&output=embed",
+        dirUrl: "https://www.google.com/maps/dir/?api=1&destination=Payyoli,+Kozhikode,+Kerala"
+      }},
+      nikah: {{
+        badge: "🕌 NIKAH CEREMONY • THU, DEC 31, 2026 • 11:00 AM",
+        name: "Paloor Moihidheen Juma Masjid",
+        address: "Paloor, Thikkodi, Kozhikode District, Kerala, India",
+        fullCopy: "Paloor Moihidheen Juma Masjid, Thikkodi, Kozhikode District, Kerala, India",
+        mapSrc: "https://maps.google.com/maps?q=Paloor+Muhiyudheen+Juma+Masjid,+Thikkodi,+Kozhikode,+Kerala&t=&z=15&ie=UTF8&iwloc=&output=embed",
+        dirUrl: "https://www.google.com/maps/dir/?api=1&destination=Paloor+Muhiyudheen+Juma+Masjid,+Thikkodi,+Kozhikode,+Kerala"
+      }}
+    }};
+
+    let currentSelectedVenue = 'reception';
+
+    function selectVenueTab(venueKey) {{
+      currentSelectedVenue = venueKey;
+      const data = venueDataMap[venueKey];
+      if (!data) return;
+
+      const tabRec = document.getElementById('tabReceptionBtn');
+      const tabNik = document.getElementById('tabNikahBtn');
+      if (tabRec && tabNik) {{
+        if (venueKey === 'reception') {{
+          tabRec.classList.add('active');
+          tabNik.classList.remove('active');
+        }} else {{
+          tabRec.classList.remove('active');
+          tabNik.classList.add('active');
+        }}
+      }}
+
+      const badgeEl = document.getElementById('venueEventBadge');
+      const nameEl = document.getElementById('venueName');
+      const addrEl = document.getElementById('venueAddress');
+      const mapEl = document.getElementById('gmapIframe');
+      const dirEl = document.getElementById('getDirectionsLink');
+
+      if (badgeEl) badgeEl.innerText = data.badge;
+      if (nameEl) nameEl.innerText = data.name;
+      if (addrEl) addrEl.innerText = data.address;
+      if (mapEl) mapEl.src = data.mapSrc;
+      if (dirEl) dirEl.href = data.dirUrl;
+
+      showToast('Switched map to ' + data.name);
+    }}
+
+    function copyVenueAddress() {{
+      const data = venueDataMap[currentSelectedVenue] || venueDataMap.reception;
+      navigator.clipboard.writeText(data.fullCopy).then(() => {{
+        showToast('Address copied to clipboard!');
+      }}).catch(() => {{
+        showToast(data.fullCopy);
+      }});
+    }}
+
     function copyAddress() {{
-      const address = "Puthukkudy, P.O. Vakayad, Naduvannur, Kozhikode District, Kerala - 673614. Contact: 7034490662";
+      copyVenueAddress();
+    }}
+
+    function copyAddress() {{
+      const address = "Zaithoon Villa (Razak Hajee Kattil), Payyoli, Kozhikode District, Kerala, India";
       navigator.clipboard.writeText(address).then(() => {{
         showToast('Address copied to clipboard!');
       }}).catch(() => {{
-        showToast('Address: Puthukkudy, Vakayad, Naduvannur');
+        showToast('Address: Zaithoon Villa, Payyoli, Kozhikode');
       }});
     }}
 
@@ -2459,15 +2322,15 @@ html_content = f'''<!DOCTYPE html>
       const icsData = [
         'BEGIN:VCALENDAR',
         'VERSION:2.0',
-        'PRODID:-//Twin Wedding Invitation//EN',
+        'PRODID:-//Wedding Reception//EN',
         'CALSCALE:GREGORIAN',
         'METHOD:PUBLISH',
         'BEGIN:VEVENT',
-        'SUMMARY:Wedding Ceremony of Salmabee & Muhammed Ajnas and Rahmabee & Shahbaz Muhammed',
-        'DESCRIPTION:We cordially invite you with family to share the happiness of the Wedding ceremony of our children: Salmabee with Muhammed Ajnas and Rahmabee with Shahbaz Muhammed. Hosted by Mr. Abdul Rahman & Mrs. Zeenath Rahman.',
-        'LOCATION:Puthukkudy, P.O. Vakayad, Naduvannur, Kozhikode, Kerala 673614',
-        'DTSTART:20261107T113000Z',
-        'DTEND:20261107T153000Z',
+        'SUMMARY:Wedding Reception of Afsal & Najila Ashraf',
+        'DESCRIPTION:Cordially invite you and your family to grace the joyous occasion of the wedding reception of their beloved son Afsal with Najila Ashraf. Hosted by Razak Hajee Kattil (V K) & Zainaba Razak.',
+        'LOCATION:Zaithoon Villa, Payyoli, Kozhikode, Kerala',
+        'DTSTART:20270103T063000Z',
+        'DTEND:20270103T103000Z',
         'STATUS:CONFIRMED',
         'END:VEVENT',
         'END:VCALENDAR'
@@ -2476,24 +2339,16 @@ html_content = f'''<!DOCTYPE html>
       const blob = new Blob([icsData], {{ type: 'text/calendar;charset=utf-8' }});
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
-      link.setAttribute('download', 'Wedding_Salmabee_Rahmabee.ics');
+      link.setAttribute('download', 'Wedding_Najila_Afsal.ics');
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       showToast('Calendar event downloaded!');
     }}
 
-    function openLightbox() {{
-      document.getElementById('lightboxModal').classList.add('open');
-    }}
-    function closeLightbox() {{
-      document.getElementById('lightboxModal').classList.remove('open');
-    }}
-
     // ==========================================
     // MOBILE TAP & GESTURE NAVIGATION
-    // (Tap right to advance, tap left to go back, swipe left/right supported)
-    // ==========================================
+    // ==========================
     let touchStartX = 0;
     let touchStartY = 0;
     let touchStartTime = 0;
@@ -2514,43 +2369,35 @@ html_content = f'''<!DOCTYPE html>
       const deltaY = endY - touchStartY;
       const elapsedTime = performance.now() - touchStartTime;
 
-      // 1. Check for horizontal swipe gesture (> 45px movement)
       if (Math.abs(deltaX) > 45 && Math.abs(deltaX) > Math.abs(deltaY) * 1.2) {{
         if (deltaX < 0) {{
-          nextStep(); // Swiped left -> Next page
+          nextStep();
         }} else {{
-          prevStep(); // Swiped right -> Previous page
+          prevStep();
         }}
         return;
       }}
 
-      // 2. Check for screen tap (< 18px movement within 380ms)
       if (Math.abs(deltaX) < 18 && Math.abs(deltaY) < 18 && elapsedTime < 380) {{
-        // If tapping on interactive elements (buttons, links, map, controls), ignore screen tap
         const interactiveTarget = e.target.closest('button, a, .icon-btn, .story-dash, iframe, input, select');
         if (interactiveTarget) return;
 
-        // If on Scene 1 and envelope is not yet opened, tap opens envelope
         if (currentStep === 1 && !envelopeOpened) {{
           openInvitation();
           return;
         }}
 
-        // Tap left 30% of screen: Go to previous page
         if (endX < window.innerWidth * 0.32) {{
           prevStep();
         }} else {{
-          // Tap main / right area (68% of screen): Move to next page!
           nextStep();
         }}
       }}
     }}, false);
 
-    // Also support mouse click on stage for desktop preview
     const stageWrapper = document.querySelector('.stage-wrapper');
     if (stageWrapper) {{
       stageWrapper.addEventListener('click', (e) => {{
-        // If clicking on interactive elements, let the button handle it
         if (e.target.closest('button, a, .icon-btn, .story-dash, iframe, input, select, #waxSeal, .envelope-flaps-overlay')) {{
           return;
         }}
@@ -2572,7 +2419,41 @@ html_content = f'''<!DOCTYPE html>
       if (e.key === 'ArrowRight' || e.key === ' ') nextStep();
       if (e.key === 'ArrowLeft') prevStep();
     }});
+
+    // Deep linking support for direct scene & venue inspection (?step=X&venue=nikah)
+    window.addEventListener('DOMContentLoaded', () => {{
+      try {{
+        const params = new URLSearchParams(window.location.search);
+        const stepParam = parseInt(params.get('step'));
+        const venueParam = params.get('venue');
+
+        if (stepParam && stepParam >= 1 && stepParam <= 6) {{
+          if (stepParam > 1) {{
+            envelopeOpened = true;
+            if (envelopeBox) envelopeBox.classList.add('opened');
+          }}
+          goToStep(stepParam);
+          if (stepParam === 6 && venueParam === 'nikah') {{
+            setTimeout(() => selectVenueTab('nikah'), 150);
+          }}
+        }}
+      }} catch (err) {{
+        console.error('URL param handling error:', err);
+      }}
+    }});
   </script>
+  <!-- SVG Soft Dress Flow Filter (Flowing watercolor gown motion) -->
+  <svg style="position: absolute; width: 0; height: 0; pointer-events: none;" aria-hidden="true">
+    <defs>
+      <filter id="softDressFlow" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.016" numOctaves="2" result="noise">
+          <animate attributeName="baseFrequency" dur="7s" values="0.010 0.014; 0.016 0.022; 0.010 0.014" repeatCount="indefinite" />
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+
 </body>
 </html>
 '''
@@ -2589,6 +2470,6 @@ output_brain = os.path.join(brain_dir, "wedding_invitation.html")
 with open(output_brain, "w", encoding="utf-8") as f:
     f.write(html_content)
 
-print("Updated directions and removed section successfully:")
+print("Wedding invitation generated successfully:")
 print("1. Scratch index.html:", os.path.exists(output_scratch), "Size:", os.path.getsize(output_scratch))
 print("2. Brain wedding_invitation.html:", os.path.exists(output_brain), "Size:", os.path.getsize(output_brain))
