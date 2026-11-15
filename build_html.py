@@ -899,20 +899,49 @@ html_content = f'''<!DOCTYPE html>
       opacity: 1 !important;
     }}
 
-    /* Subtle luxury entrance fade */
-    .active .scene3-artwork-container {{
-      animation: scene3CardReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    /* Luxury Slow Reveal of Bride & Groom Artwork */
+    #scene-portrait.active .scene3-artwork-container {{
+      animation: brideGroomSlowReveal 3.2s cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
     }}
 
-    @keyframes scene3CardReveal {{
+    @keyframes brideGroomSlowReveal {{
       0% {{
-        opacity: 0.88;
+        opacity: 0;
+        filter: blur(14px);
+        transform: scale(0.95);
+      }}
+      30% {{
+        opacity: 0.28;
+        filter: blur(8px);
+      }}
+      65% {{
+        opacity: 0.76;
+        filter: blur(2.5px);
         transform: scale(0.99);
       }}
       100% {{
         opacity: 1;
+        filter: blur(0);
         transform: scale(1);
       }}
+    }}
+
+    #scene-portrait.active .spin-action-pill {{
+      animation: pillEntrance 1.4s ease 1.2s both;
+    }}
+
+    #scene-portrait.active .scene3-nav-overlay {{
+      animation: navEntrance 1.4s ease 1.4s both;
+    }}
+
+    @keyframes pillEntrance {{
+      0% {{ opacity: 0; transform: translateY(-8px); }}
+      100% {{ opacity: 1; transform: translateY(0); }}
+    }}
+
+    @keyframes navEntrance {{
+      0% {{ opacity: 0; transform: translateY(8px); }}
+      100% {{ opacity: 1; transform: translateY(0); }}
     }}
 
     /* Interactive Spin Option Pill */
@@ -1266,11 +1295,11 @@ html_content = f'''<!DOCTYPE html>
        SCENE 6: VENUE & ROUTE MAP (DUAL VENUE: WEDDING & NIKAH)
        ========================================================= */
     #scene-map {{
-      padding: 20px 16px 16px 16px;
+      padding: max(38px, calc(env(safe-area-inset-top, 0px) + 26px)) 16px max(16px, calc(env(safe-area-inset-bottom, 0px) + 12px)) 16px;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
       box-sizing: border-box;
       background: #FAF7F2;
       background-image: radial-gradient(ellipse at 50% 35%, #FFFFFF 0%, #FAF7F2 70%, #F5EFE6 100%);
@@ -1282,31 +1311,34 @@ html_content = f'''<!DOCTYPE html>
 
     .scene6-body-content {{
       width: 100%;
+      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       text-align: center;
+      min-height: 0;
     }}
 
     .venue-title {{
       font-family: 'Cinzel', serif;
-      font-size: 14px;
+      font-size: 15px;
       letter-spacing: 2.5px;
       color: #2E3830;
       font-weight: 700;
       text-align: center;
       text-transform: uppercase;
+      margin-top: 2px;
       margin-bottom: 2px;
     }}
 
     .venue-sub {{
       font-family: 'Cormorant Garamond', serif;
-      font-size: 12.5px;
+      font-size: 12px;
       font-style: italic;
       color: #556658;
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }}
 
     /* Dual Venue Tab Switcher */
@@ -1314,7 +1346,7 @@ html_content = f'''<!DOCTYPE html>
       display: flex;
       gap: 8px;
       width: 100%;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       justify-content: center;
     }}
 
@@ -1350,11 +1382,11 @@ html_content = f'''<!DOCTYPE html>
       background: rgba(255, 255, 255, 0.90);
       border: 1.5px solid rgba(190, 165, 115, 0.5);
       border-radius: 12px;
-      padding: 9px 14px;
+      padding: 8px 14px;
       width: 100%;
       box-sizing: border-box;
       text-align: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       box-shadow: 0 4px 14px rgba(56, 66, 57, 0.05);
     }}
 
@@ -1384,17 +1416,17 @@ html_content = f'''<!DOCTYPE html>
       line-height: 1.3;
     }}
 
-    /* Reduced compact map frame (180px height) */
+    /* Responsive map frame */
     .gmap-frame-box {{
       width: 100%;
-      height: 180px;
-      max-height: 185px;
-      flex: none;
+      flex: 1;
+      min-height: 200px;
+      max-height: 380px;
       border-radius: 12px;
       overflow: hidden;
       border: 1.5px solid rgba(190, 165, 115, 0.5);
-      margin-bottom: 10px;
-      box-shadow: 0 4px 12px rgba(56, 66, 57, 0.08);
+      margin-bottom: 12px;
+      box-shadow: 0 4px 14px rgba(56, 66, 57, 0.08);
       box-sizing: border-box;
       background: #ECE7DE;
     }}
@@ -1411,7 +1443,7 @@ html_content = f'''<!DOCTYPE html>
       grid-template-columns: 1fr 1fr;
       gap: 8px;
       width: 100%;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       box-sizing: border-box;
     }}
 
@@ -1454,12 +1486,7 @@ html_content = f'''<!DOCTYPE html>
     }}
 
     .scene6-nav-row {{
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 2px;
-      box-sizing: border-box;
+      display: none;
     }}
 
     /* =========================================================
@@ -1792,11 +1819,12 @@ html_content = f'''<!DOCTYPE html>
             📋 Copy Address
           </button>
         </div>
+      </div>
 
-        <div class="scene6-nav-row">
-          <button class="nav-link-btn" onclick="userGoToStep(5)">‹ Back</button>
-          <button class="gold-btn" onclick="restartPresentation(event)">✉️ Replay from Beginning</button>
-        </div>
+      <!-- Navigation Row Pinned to Bottom (Matching Scene 5 Exactly) -->
+      <div class="card-nav-row" style="margin-top: auto; z-index: 20;">
+        <button class="nav-link-btn" onclick="userGoToStep(5)">‹ Back</button>
+        <button class="gold-btn" onclick="restartPresentation(event)">✉️ Replay from Beginning</button>
       </div>
     </div>
 
