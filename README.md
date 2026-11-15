@@ -35,10 +35,8 @@ A luxury, interactive royal digital wedding invitation celebrating the union of 
   - One-click **Get Directions** (Google Maps) and **Copy Address**.
   - **Replay from Beginning** button resetting to the closed envelope cover.
 
-- 🎵 **Background Music ("Din Shagna Da" by Jasleen Royal)**:
-  - The iconic, viral wedding bridal anthem **"Din Shagna Da"** sung by **Jasleen Royal** (from *Phillauri*).
-  - Dual audio format support (`.m4a` and `.mp3`) for flawless playback across iOS (Safari/iPhone) and Android.
-  - Seamless mobile autoplay gesture handling with animated golden glowing music indicator (`🔊` / `🔇`).
+- 🎵 **Background Music ("Bi Saraha" by Abeer Nehme)**:
+  - Romantic acoustic background music with smooth fade-in and animated golden speaker indicator (`🔊` / `🔇`).
 
 ---
 

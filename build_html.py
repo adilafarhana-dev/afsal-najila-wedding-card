@@ -574,18 +574,23 @@ html_content = f'''<!DOCTYPE html>
       background-position: center;
       z-index: 25;
       filter: drop-shadow(0 8px 18px rgba(0,0,0,0.5));
-      transition: transform 0.4s ease, filter 0.4s ease;
+      transition: transform 0.4s ease, filter 0.4s ease, opacity 0.6s ease;
       cursor: pointer;
     }}
     .wax-seal:hover {{
       transform: translate(-50%, -50%) scale(1.03);
       filter: drop-shadow(0 10px 22px rgba(0,0,0,0.6));
     }}
+    .envelope-flaps-overlay.lighting-active .wax-seal {{
+      transform: translate(-50%, -50%) scale(1.08);
+      filter: drop-shadow(0 0 16px rgba(255, 230, 130, 0.85)) drop-shadow(0 10px 24px rgba(0,0,0,0.6));
+    }}
     .envelope-flaps-overlay.opened .wax-seal {{
-      transform: translate(-50%, -50%) scale(1.3);
-      opacity: 0;
-      pointer-events: none;
-      transition: transform 3.2s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 2.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+      transform: translate(-50%, -50%) scale(1.25) !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+      transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease, visibility 0.6s ease !important;
     }}
 
     /* =========================================================
@@ -671,7 +676,12 @@ html_content = f'''<!DOCTYPE html>
 
     /* Settled or Opened Card Reveal */
     .envelope-flaps-overlay.opened ~ .reveal-container .fade-youre,
-    .flying-butterfly-container.landed ~ .reveal-container .fade-youre,
+    .flying-butterfly-container.landed ~ .reveal-container .fade-youre {{
+      opacity: 1 !important;
+      filter: blur(0) !important;
+      transform: translateY(0) !important;
+      transition: opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease !important;
+    }}
     .active .flying-butterfly-container.fly-active ~ .reveal-container .fade-youre {{
       opacity: 1;
       filter: blur(0);
@@ -679,7 +689,12 @@ html_content = f'''<!DOCTYPE html>
     }}
 
     .envelope-flaps-overlay.opened ~ .reveal-container .fade-cordially,
-    .flying-butterfly-container.landed ~ .reveal-container .fade-cordially,
+    .flying-butterfly-container.landed ~ .reveal-container .fade-cordially {{
+      opacity: 1 !important;
+      filter: blur(0) !important;
+      transform: scale(1) translateY(0) !important;
+      transition: opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease !important;
+    }}
     .active .flying-butterfly-container.fly-active ~ .reveal-container .fade-cordially {{
       opacity: 1;
       filter: blur(0);
@@ -687,7 +702,12 @@ html_content = f'''<!DOCTYPE html>
     }}
 
     .envelope-flaps-overlay.opened ~ .reveal-container .fade-invited,
-    .flying-butterfly-container.landed ~ .reveal-container .fade-invited,
+    .flying-butterfly-container.landed ~ .reveal-container .fade-invited {{
+      opacity: 1 !important;
+      filter: blur(0) !important;
+      transform: translateY(0) !important;
+      transition: opacity 0.8s ease, filter 0.8s ease, transform 0.8s ease !important;
+    }}
     .active .flying-butterfly-container.fly-active ~ .reveal-container .fade-invited {{
       opacity: 1;
       filter: blur(0);
@@ -695,13 +715,20 @@ html_content = f'''<!DOCTYPE html>
     }}
 
     .envelope-flaps-overlay.opened ~ .reveal-container .gold-divider,
-    .flying-butterfly-container.landed ~ .reveal-container .gold-divider,
+    .flying-butterfly-container.landed ~ .reveal-container .gold-divider {{
+      opacity: 1 !important;
+      transition: opacity 0.8s ease !important;
+    }}
     .active .flying-butterfly-container.fly-active ~ .reveal-container .gold-divider {{
       opacity: 1;
     }}
 
     .envelope-flaps-overlay.opened ~ .reveal-container .fade-subtext,
-    .flying-butterfly-container.landed ~ .reveal-container .fade-subtext,
+    .flying-butterfly-container.landed ~ .reveal-container .fade-subtext {{
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      transition: opacity 0.8s ease, transform 0.8s ease !important;
+    }}
     .active .flying-butterfly-container.fly-active ~ .reveal-container .fade-subtext {{
       opacity: 1;
       transform: translateY(0);
@@ -1530,15 +1557,15 @@ html_content = f'''<!DOCTYPE html>
 
   <!-- Discreet Corner Controls -->
   <div class="corner-controls">
-    <button id="audioBtn" class="icon-btn music-active" title="Background Music: Din Shagna Da by Jasleen Royal (Playing)">
+    <button id="audioBtn" class="icon-btn music-active" title="Background Music: Bi Saraha by Abeer Nehme (Playing)">
       <span id="audioIcon">🔊</span>
     </button>
   </div>
 
-  <!-- Background Music: Din Shagna Da (Jasleen Royal) -->
+  <!-- Background Music: Bi Saraha (Abeer Nehme) -->
   <audio id="bgMusic" autoplay loop preload="auto" playsinline webkit-playsinline>
-    <source src="audio/din_shagna_da.m4a" type="audio/mp4">
-    <source src="audio/din_shagna_da.mp3" type="audio/mpeg">
+    <source src="audio/bi_saraha.m4a" type="audio/mp4">
+    <source src="audio/bi_saraha.mp3" type="audio/mpeg">
   </audio>
 
   <!-- Toast Notification -->
@@ -1950,10 +1977,18 @@ html_content = f'''<!DOCTYPE html>
 
       playBackgroundSong();
 
-      if (envelopeBox) {{
-        envelopeBox.classList.add('lighting-active');
+      const envBox = document.getElementById('envelopeBox');
+      const sealEl = document.getElementById('waxSeal');
+
+      if (envBox) {{
+        envBox.classList.add('lighting-active');
         setTimeout(() => {{
-          envelopeBox.classList.add('opened');
+          envBox.classList.add('opened');
+          if (sealEl) {{
+            sealEl.style.opacity = '0';
+            sealEl.style.visibility = 'hidden';
+            sealEl.style.pointerEvents = 'none';
+          }}
         }}, 650);
       }}
 
@@ -1991,50 +2026,32 @@ if (waxSeal) waxSeal.addEventListener('click', openInvitation);
       const musicEl = document.getElementById('bgMusic');
       const flaps = document.querySelectorAll('.flap');
 
-      // Instant reset of flaps
-      flaps.forEach(f => {{
-        f.style.transition = 'none';
-        f.style.transform = '';
-        f.style.opacity = '1';
-      }});
-
-      // Instant reset of wax seal
-      if (sealEl) {{
-        sealEl.style.transition = 'none';
-        sealEl.style.opacity = '1';
-        sealEl.style.transform = 'translate(-50%, -50%)';
-        sealEl.style.visibility = 'visible';
-        sealEl.style.pointerEvents = 'auto';
-      }}
-
-      // Instant reset of envelope overlay container
+      // Temporarily disable transitions during reset
       if (envBox) {{
         envBox.style.transition = 'none';
-        envBox.style.opacity = '1';
-        envBox.style.visibility = 'visible';
-        envBox.style.pointerEvents = 'auto';
-        envBox.classList.remove('opened');
-        envBox.classList.remove('lighting-active');
+        envBox.classList.remove('opened', 'lighting-active');
       }}
-
-      // Instant reset of butterfly
+      if (sealEl) sealEl.style.transition = 'none';
+      flaps.forEach(f => f.style.transition = 'none');
       if (butterflyEl) {{
-        butterflyEl.classList.remove('fly-active');
-        butterflyEl.classList.remove('landed');
-        butterflyEl.style.opacity = '0';
+        butterflyEl.style.transition = 'none';
         butterflyEl.style.animation = 'none';
+        butterflyEl.classList.remove('fly-active', 'landed');
+        butterflyEl.style.opacity = '0';
       }}
 
       envelopeOpened = false;
 
-      // Force layout reflow
+      // Force layout reflow so class removals register instantly
       if (envBox) void envBox.offsetHeight;
 
-      // Re-enable smooth CSS transitions
-      flaps.forEach(f => f.style.transition = '');
-      if (sealEl) sealEl.style.transition = '';
-      if (envBox) envBox.style.transition = '';
-      if (butterflyEl) butterflyEl.style.animation = '';
+      // Completely remove all inline styles so stylesheet rules apply naturally
+      if (envBox) envBox.removeAttribute('style');
+      if (sealEl) sealEl.removeAttribute('style');
+      flaps.forEach(f => f.removeAttribute('style'));
+      if (butterflyEl) {{
+        butterflyEl.removeAttribute('style');
+      }}
 
       // Reset music position if playing
       if (musicEl) {{
@@ -2060,6 +2077,11 @@ if (waxSeal) waxSeal.addEventListener('click', openInvitation);
       if (openedParam === '1' || (stepParam && stepParam > 1)) {{
         envelopeOpened = true;
         if (envelopeBox) envelopeBox.classList.add('opened');
+        if (waxSeal) {{
+          waxSeal.style.opacity = '0';
+          waxSeal.style.visibility = 'hidden';
+          waxSeal.style.pointerEvents = 'none';
+        }}
         if (flyingButterfly) flyingButterfly.classList.add('landed');
       }}
 
@@ -2141,7 +2163,7 @@ if (waxSeal) waxSeal.addEventListener('click', openInvitation);
     animateParticles();
 
     // ==========================================
-    // DEFAULT BACKGROUND MUSIC SYSTEM: "DIN SHAGNA DA" (Jasleen Royal)
+    // DEFAULT BACKGROUND MUSIC SYSTEM: "BI SARAHA" (بصراحة)
     // ==========================================
     const bgMusic = document.getElementById('bgMusic');
     const audioBtn = document.getElementById('audioBtn');
