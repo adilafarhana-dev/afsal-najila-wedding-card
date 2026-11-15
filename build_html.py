@@ -1584,15 +1584,15 @@ html_content = f'''<!DOCTYPE html>
 
   <!-- Discreet Corner Controls -->
   <div class="corner-controls">
-    <button id="audioBtn" class="icon-btn music-active" title="Background Music: Bi Saraha by Abeer Nehme (Playing)">
+    <button id="audioBtn" class="icon-btn music-active" title="Background Music: Kudmayi Reprise (Female) (Playing)">
       <span id="audioIcon">🔊</span>
     </button>
   </div>
 
-  <!-- Background Music: Bi Saraha (Abeer Nehme) -->
+  <!-- Background Music: Kudmayi Reprise (Female) -->
   <audio id="bgMusic" autoplay loop preload="auto" playsinline webkit-playsinline>
-    <source src="audio/bi_saraha.m4a" type="audio/mp4">
-    <source src="audio/bi_saraha.mp3" type="audio/mpeg">
+    <source src="audio/kudmayi_reprise_female.m4a" type="audio/mp4">
+    <source src="audio/kudmayi_reprise_female.mp3" type="audio/mpeg">
   </audio>
 
   <!-- Toast Notification -->
@@ -2191,7 +2191,7 @@ if (waxSeal) waxSeal.addEventListener('click', openInvitation);
     animateParticles();
 
     // ==========================================
-    // DEFAULT BACKGROUND MUSIC SYSTEM: "BI SARAHA" (بصراحة)
+    // DEFAULT BACKGROUND MUSIC SYSTEM: "KUDMAYI REPRISE (FEMALE)"
     // ==========================================
     const bgMusic = document.getElementById('bgMusic');
     const audioBtn = document.getElementById('audioBtn');
